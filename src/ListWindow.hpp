@@ -1,5 +1,5 @@
 #pragma once
-#include "PanesContainer.hpp"
+#include "IAppContext.hpp"
 #include "CursesToolkit/Window.hpp"
 
 #include <memory>
@@ -11,7 +11,7 @@ public:
     using Placer = std::function<std::pair<int,int>(int, int)>;
 
     ListWindow(
-        Display &display,
+        IAppContext &context,
         const std::string &title,
         const std::string &header,
         const std::string &footer,

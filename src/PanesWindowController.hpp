@@ -1,28 +1,21 @@
 #pragma once
 
 #include "ListWindow.hpp"
+#include "IAppContext.hpp"
 #include "CursesToolkit/IKeyboardInput.hpp"
 #include <memory>
 
 class PanesWindowController :  public IKeyboardInput
 {
 public:
-    using UpdateActive = std::function<void(Pane&)>;
-    PanesWindowController(
-        Display &display,
-        Keyboard &keyboard,
-        PanesContainer &panes,
-        UpdateActive updateActive);
+    PanesWindowController(IAppContext &context);
 
     bool parseKey(const int key, Keyboard &keyboard) override;
     bool accepted() const;
     Pane& selected();
 
 private:
-    Display &display_;
-    Keyboard &keyboard_;
-    PanesContainer &panes_;
-    UpdateActive updateActive_;
+    IAppContext &context_;
     std::unique_ptr<ListWindow> listView_;
     bool accept_;
 

@@ -4,10 +4,10 @@
 #include <cstring>
 
 Statusbar::Statusbar(
-    Display& display,
-    const PanesContainer& panes)
+    Display &display,
+    IAppContext &context)
     : Window(display, 0, display.height()-1, display.width(), 1)
-    , panes_(panes)
+    , context_(context)
     , fullStatusText(width(), ' ')
 {
 }
@@ -24,17 +24,17 @@ void Statusbar::draw()
 {
     std::fill(fullStatusText.begin(), fullStatusText.end(), ' ');
 
-    const auto linesCount = panes_.current().buffer().size();
+    const auto linesCount = context_.window().buffer().size();
 
     std::size_t cursorPos = 0;
     std::size_t procentage = 0;
-/*    const auto cursor = panes_.current().window().cursor();
+    const auto cursor = context_.window().cursor();
     if (cursor)
     {
         cursorPos = (**cursor)+1;
         procentage = cursorPos * 100 / linesCount;
     }
-*/
+
     constexpr auto STATUS_BUFFER_LEN = 256;
     char statusBuffer[STATUS_BUFFER_LEN];
     std::snprintf(statusBuffer, STATUS_BUFFER_LEN,

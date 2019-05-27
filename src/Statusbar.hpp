@@ -1,17 +1,16 @@
 #pragma once
-#include "PanesContainer.hpp"
 #include "CursesToolkit/Window.hpp"
+#include "IAppContext.hpp"
 
 class Statusbar : Window
 {
 public:
-    Statusbar(Display&, const PanesContainer&);
+    Statusbar(Display&, IAppContext&);
 
     void draw() override;
     void resize(const int w, const int h) override;
 
 private:
-    const PanesContainer& panes_;
-
+    IAppContext& context_;
     std::string fullStatusText;
 };

@@ -29,15 +29,8 @@ std::string formatRow(const std::string& name, const std::string &linesCount)
 
 }
 
-PanesWindowController::PanesWindowController(
-        Display &display,
-        Keyboard &keyboard,
-        PanesContainer &panes,
-        UpdateActive updateActive)
-    : display_(display)
-    , keyboard_(keyboard)
-    , panes_(panes)
-    , updateActive_(updateActive)
+PanesWindowController::PanesWindowController(IAppContext &context)
+    : context_(context)
 {
     listView_ = createView();
 }
@@ -80,25 +73,25 @@ bool PanesWindowController::accepted() const
 Pane& PanesWindowController::selected()
 {
     const auto index = std::distance(listView_->items().begin(), listView_->selected());
-    return (*panes_.allPanes().at(index).get());
+    return (*context_.panes().allPanes().at(index));
 }
 
 void PanesWindowController::remove()
 {
-    if (panes_.allPanes().size() == 1)
+    if (context_.panes().allPanes().size() == 1)
         return;
 
     QuestionWindow question{
-        display_,
+        context_.display(),
             "Are you sure that you want to remove:\n* " + selected().name() + " *",
             {"Yes","Cancel"}};
     QuestionWindowController controller{question};
-    keyboard_.parseKeys(controller);
+    context_.keyboard().parseKeys(controller);
 
     if (controller.accepted() && *question.selected() == "Yes")
     {
-        panes_.remove(selected());
-        updateActive_(panes_.current());
+        context_.panes().remove(selected());
+        context_.setActive(context_.panes().current());
         listView_ = createView();
     }
 }
@@ -107,9 +100,9 @@ void PanesWindowController::rename()
 {
     auto &selectedPane = selected();
 
-    InputWindow inputWindow{display_, "New name:", selectedPane.name(), NameWidth, NameWidth + 4};
+    InputWindow inputWindow{context_.display(), "New name:", selectedPane.name(), NameWidth, NameWidth + 4};
     InputWindowController controller{inputWindow};
-    keyboard_.parseKeys(controller);
+    context_.keyboard().parseKeys(controller);
 
     if (controller.accepted())
     {
@@ -122,19 +115,19 @@ std::unique_ptr<ListWindow> PanesWindowController::createView() const
 {
     ListWindow::Items items;
     std::size_t selectedIndex = 0;
-    for (const auto &item : panes_.allPanes())
+    for (const auto &item : context_.panes().allPanes())
     {
         items.push_back(
             formatRow(
                 item->name(),
                 std::to_string(item->buffer().size())));
 
-        if (item.get() == &panes_.current())
+        if (item.get() == &context_.panes().current())
             selectedIndex = items.size() - 1;
     }
 
     return std::make_unique<ListWindow>(
-        display_,
+        context_,
         "",
         formatRow("Buffers:","Lines: "),
         "[r] rename, [d] delete [Enter] select [ESC] cancel",

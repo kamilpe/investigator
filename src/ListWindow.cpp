@@ -3,21 +3,21 @@
 #include <ncurses.h>
 
 ListWindow::ListWindow(
-    Display &display,
+    IAppContext &context,
     const std::string &title,
     const std::string &header,
     const std::string &footer,
     const Items &items,
     const std::size_t selectedIndex,
     Placer placer)
-    : Window(display, 0, 0, 0, 0)
+    : Window(context.display(), 0, 0, 0, 0)
     , header_(header)
     , footer_(footer)
     , items_(items)
     , selected_(items_.begin() + selectedIndex)
     , placer_(placer)
 {
-    resize(display.width(), display.height());
+    resize(context.display().width(), context.display().height());
 }
 
 ListWindow::~ListWindow()

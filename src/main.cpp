@@ -62,8 +62,7 @@ int main(int argv, char **argc)
 
     try
     {
-//        Statusbar statusbar{display, textWin, log};
-        MainController mainController{display, log};
+        MainController mainController{display, log, keyboard};
         keyboard.parseKeys(mainController);
     }
     catch (const std::exception& e)
