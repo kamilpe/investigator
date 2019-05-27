@@ -119,7 +119,7 @@ void Window::bar(int x, int y, int w)
 
 void Window::refresh()
 {
-    wrefresh(static_cast<WINDOW*>(winPtr_));
+    wnoutrefresh(static_cast<WINDOW*>(winPtr_));
 }
 
 void Window::bordering()

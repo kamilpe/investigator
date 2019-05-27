@@ -32,6 +32,7 @@ void Display::start()
     initColors();
     curs_set(0);
     getmaxyx(stdscr, height_, width_);
+    ::refresh();
 }
 
 void Display::stop()
@@ -41,7 +42,6 @@ void Display::stop()
 
 void Display::refresh()
 {
-    ::refresh();
     for (auto* window : windows_)
     {
         if (window->getVisibility())
@@ -56,6 +56,7 @@ void Display::refresh()
             window->refresh();
         }
     }
+    doupdate();
 }
 
 void Display::initColors() const
