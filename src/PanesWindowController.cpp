@@ -27,6 +27,60 @@ std::string formatRow(const std::string& name, const std::string &linesCount)
     return label.str();
 }
 
+class CenterListWindow : public ListWindow
+{
+public:
+    CenterListWindow(
+        IAppContext &context,
+        const Items &items,
+        const std::size_t selectedIndex)
+        : ListWindow(context,items,selectedIndex)
+    {
+        resize(context.display().width(), context.display().height());
+    }
+
+
+    void resize(const int w, const int h) override
+    {
+        Window::resize(WindowWidth, h-5);
+        centerWindow();
+    }
+
+    void draw() override
+    {
+        fillWith(Display::Pair::Dialog);
+        bordering();
+
+        int xpos = 2;
+        int ypos = 2;
+
+        const auto header = formatRow("Buffers:","Lines: ");
+        print(xpos, ypos, header);
+        ++ypos;
+        lineh(xpos,ypos, header.size());
+        ypos+=1;
+
+        for (auto it = items_.begin();
+             it != items_.end() && ypos < height();
+             ++it)
+        {
+            if (it == selected_)
+            {
+                setColor(Display::Pair::Highlight);
+            }
+            else
+            {
+                setColor(Display::Pair::Dialog);
+            }
+
+            print(xpos, ypos, *it);
+            ++ypos;
+        }
+        setColor(Display::Pair::Dialog);
+        print (2, height() - 2,  "[r] rename, [d] delete [Enter] select [ESC] cancel");
+    }
+};
+
 }
 
 PanesWindowController::PanesWindowController(IAppContext &context)
@@ -126,12 +180,8 @@ std::unique_ptr<ListWindow> PanesWindowController::createView() const
             selectedIndex = items.size() - 1;
     }
 
-    return std::make_unique<ListWindow>(
+    return std::make_unique<CenterListWindow>(
         context_,
-        "",
-        formatRow("Buffers:","Lines: "),
-        "[r] rename, [d] delete [Enter] select [ESC] cancel",
         items,
-        selectedIndex,
-        [](int w, int h){return std::make_pair(WindowWidth, h-5);});
+        selectedIndex);
 }

@@ -8,30 +8,19 @@ class ListWindow : public Window
 {
 public:
     using Items = std::vector<std::string>;
-    using Placer = std::function<std::pair<int,int>(int, int)>;
 
     ListWindow(
         IAppContext &context,
-        const std::string &title,
-        const std::string &header,
-        const std::string &footer,
         const Items &items,
-        const std::size_t selectedIndex,
-        Placer placer);
+        const std::size_t selectedIndex);
     ~ListWindow();
 
-    void draw() override;
-    void resize(const int w, const int h) override;
     void up();
     void down();
     const Items& items() const;
     const Items::const_iterator selected();
 
-private:
-    const std::string title_;
-    const std::string header_;
-    const std::string footer_;
+protected:
     const Items items_;
     Items::const_iterator selected_;
-    Placer placer_;
 };

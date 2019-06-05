@@ -77,6 +77,7 @@ void Display::initColors() const
     init_pair(static_cast<short>(Pair::Highlight),  COLOR_DKGRAY, COLOR_YELLOW);
     init_pair(static_cast<short>(Pair::NotifyWindow), COLOR_BLACK, COLOR_LTGRAY);
     init_pair(static_cast<short>(Pair::ProgressBar),COLOR_DKBLUE, COLOR_BLUE);
+    init_pair(static_cast<short>(Pair::Bookmark),COLOR_DKBLUE, COLOR_BLACK);
 }
 
 int Display::width() const

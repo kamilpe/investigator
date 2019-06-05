@@ -40,14 +40,19 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
     case 'g':
         grep();
         break;
+    case 's':
     case 'f':
         search();
         break;
     case 'h':
         highlight();
         break;
+    case 'b':
     case ' ':
         bookmark();
+        break;
+    case 'B':
+        switchBookmarkPanel();
         break;
     case '\t':
         showPanes();
@@ -89,14 +94,16 @@ void MainController::bookmark()
         return;
     }
 
-    const std::string defaultName = "line " + std::to_string(**window_->cursor());
+    const std::string defaultName = "line " + std::to_string(**window_->cursor() + 1);
     InputWindow inputWindow{display_, "Bookmark name:", defaultName, 30};
     InputWindowController controller{inputWindow};
     keyboard_.parseKeys(controller);
 
     if (controller.accepted())
     {
-
+        bookmarks_.emplace_back(inputWindow.content(), **window().cursor());
+        if (!bookmarksController_)
+            switchBookmarkPanel();
     }
 }
 
@@ -196,6 +203,25 @@ void MainController::setActive(Pane &pane)
     }
 }
 
+void MainController::switchBookmarkPanel()
+{
+    if (!bookmarksController_)
+    {
+        bookmarksController_ = std::make_unique<BookmarksWindowController>(*this);
+        window_ = std::make_unique<LogViewport>(
+            display_,
+            panes_.current().buffer(),
+            bookmarksController_->window().width());
+        controller_ = std::make_unique<LogViewportController>(*window_.get());
+    }
+    else
+    {
+        bookmarksController_ = nullptr;
+        window_ = std::make_unique<LogViewport>(display_, panes_.current().buffer());
+        controller_ = std::make_unique<LogViewportController>(*window_.get());
+    }
+}
+
 Pane& MainController::pane()
 {
     return panes_.current();
@@ -219,4 +245,9 @@ Display& MainController::display()
 Keyboard& MainController::keyboard()
 {
     return keyboard_;
+}
+
+const std::vector<Bookmark>& MainController::bookmarks()
+{
+    return bookmarks_;
 }
