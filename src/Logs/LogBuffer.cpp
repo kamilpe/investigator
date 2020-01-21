@@ -50,7 +50,7 @@ const char* LogBuffer::line(const unsigned id) const
     return lines_[id].c_str();
 }
 
-unsigned LogBuffer::linesCount() const
+unsigned long LogBuffer::linesCount() const
 {
     return lines_.size();
 }

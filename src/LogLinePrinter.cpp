@@ -42,14 +42,14 @@ int LogLinePrinter::print(
                 firstCh + width_ < content.end() ? firstCh + width_ : content.end();
 
             printLine(x, currentY, firstCh, lastCh, match);
-            printFill(x, currentY, std::distance(firstCh, lastCh));
+            printFill(x, currentY, static_cast<int>(std::distance(firstCh, lastCh)));
         }
         else
         {
             const auto line = content.substr(width_*l, width_);
             canvas_.setColor(currentColor_);
             canvas_.print(x, currentY, content.substr(width_*l, width_));
-            printFill(x, currentY, line.length());
+            printFill(x, currentY, static_cast<int>(line.length()));
         }
     }
     return lines;
@@ -93,7 +93,7 @@ void LogLinePrinter::printLine(
             }
         }
         canvas_.putc(
-            x+std::distance(firstCh, it),
+            x + static_cast<int>(std::distance(firstCh, it)),
             y,
             *it);
     }
