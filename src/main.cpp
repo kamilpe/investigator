@@ -2,8 +2,8 @@
 #include "Logs/LogBuffer.hpp"
 #include "Logs/LogBufferView.hpp"
 #include "MainController.hpp"
-#include "CursesToolkit/Display.hpp"
-#include "CursesToolkit/Keyboard.hpp"
+#include "Toolkit/Display.hpp"
+#include "Toolkit/Keyboard.hpp"
 #include <iostream>
 
 void printException(const std::exception& e)

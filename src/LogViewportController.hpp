@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LogViewport.hpp"
-#include "CursesToolkit/IKeyboardInput.hpp"
+#include "Toolkit/IKeyboardInput.hpp"
 
 class LogViewportController : public IKeyboardInput
 {

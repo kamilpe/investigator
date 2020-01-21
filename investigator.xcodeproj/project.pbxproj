@@ -130,7 +130,7 @@
 		8E15557D23D7905E008EF97F /* src */ = {
 			isa = PBXGroup;
 			children = (
-				8E15559F23D7905E008EF97F /* CursesToolkit */,
+				8E15559F23D7905E008EF97F /* Toolkit */,
 				8E15559423D7905E008EF97F /* Logs */,
 				8E15557E23D7905E008EF97F /* MainController.cpp */,
 				8E15557F23D7905E008EF97F /* ListWindow.cpp */,
@@ -183,7 +183,7 @@
 			path = Logs;
 			sourceTree = "<group>";
 		};
-		8E15559F23D7905E008EF97F /* CursesToolkit */ = {
+		8E15559F23D7905E008EF97F /* Toolkit */ = {
 			isa = PBXGroup;
 			children = (
 				8E1555A023D7905E008EF97F /* Keyboard.hpp */,
@@ -196,7 +196,7 @@
 				8E1555A723D7905E008EF97F /* Keyboard.cpp */,
 				8E1555A823D7905E008EF97F /* ICanvas.hpp */,
 			);
-			path = CursesToolkit;
+			path = Toolkit;
 			sourceTree = "<group>";
 		};
 		8E1555C723D791CC008EF97F /* Frameworks */ = {

@@ -3,7 +3,7 @@
 #include "LogViewport.hpp"
 #include "LogViewportController.hpp"
 #include "Logs/LogBufferView.hpp"
-#include "CursesToolkit/Display.hpp"
+#include "Toolkit/Display.hpp"
 
 class Pane
 {

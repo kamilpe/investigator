@@ -2,8 +2,8 @@
 
 #include "LogLinePrinter.hpp"
 #include "Logs/LogBufferView.hpp"
-#include "CursesToolkit/Display.hpp"
-#include "CursesToolkit/Window.hpp"
+#include "Toolkit/Display.hpp"
+#include "Toolkit/Window.hpp"
 
 #include <regex>
 #include <optional>

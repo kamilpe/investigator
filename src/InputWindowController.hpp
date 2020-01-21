@@ -1,7 +1,7 @@
 #pragma once
 
 #include "InputWindow.hpp"
-#include "CursesToolkit/IKeyboardInput.hpp"
+#include "Toolkit/IKeyboardInput.hpp"
 
 class InputWindowController :  public IKeyboardInput
 {

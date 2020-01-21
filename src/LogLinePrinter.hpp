@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CursesToolkit/ICanvas.hpp"
+#include "Toolkit/ICanvas.hpp"
 #include <string>
 #include <regex>
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "CursesToolkit/Window.hpp"
+#include "Toolkit/Window.hpp"
 #include "IAppContext.hpp"
 
 class Statusbar : Window
