@@ -21,7 +21,7 @@ public:
     PanesContainer& panes() override;
     void setActive(Pane &pane) override;
     LogViewport& window() override;
-    const std::vector<Bookmark>& bookmarks() override;
+    BookmarksContainer& bookmarks() override;
 
 private:
     Display& display_;
@@ -34,7 +34,7 @@ private:
     Statusbar statusBar_;
 
 
-    std::vector<Bookmark> bookmarks_;
+    BookmarksContainer bookmarks_;
     std::string lastHighlight_;
     std::string lastSearch_;
 
