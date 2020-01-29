@@ -2,7 +2,9 @@
 
 #include "ListWindowBase.hpp"
 #include "IAppContext.hpp"
+#include "PanesContainer.hpp"
 #include "Toolkit/IKeyboardInput.hpp"
+#include "PanesWindow.hpp"
 #include <memory>
 
 class PanesWindowController :  public IKeyboardInput
@@ -16,10 +18,10 @@ public:
 
 private:
     IAppContext &context_;
-    std::unique_ptr<ListWindowBase<std::string>> listView_;
+    std::unique_ptr<PanesWindowList> listWindow_;
     bool accept_;
-
-    std::unique_ptr<ListWindowBase<std::string>> createView() const;
     void rename();
     void remove();
+    
+    void createView();
 };

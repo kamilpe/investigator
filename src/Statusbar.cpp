@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
+#include <iterator>
 
 Statusbar::Statusbar(
     Display &display,
@@ -24,14 +25,14 @@ void Statusbar::draw()
 {
     std::fill(fullStatusText.begin(), fullStatusText.end(), ' ');
 
-    const auto linesCount = context_.window().buffer().size();
+    const auto linesCount = context_.pane().buffer().size();
 
     std::size_t cursorPos = 0;
     std::size_t procentage = 0;
     const auto cursor = context_.window().cursor();
     if (cursor)
     {
-        cursorPos = (**cursor)+1;
+        cursorPos = std::distance(context_.pane().buffer().cbegin(), *cursor) + 1;
         procentage = cursorPos * 100 / linesCount;
     }
 
@@ -42,6 +43,9 @@ void Statusbar::draw()
                   cursorPos, linesCount,
                   procentage, '%');
 
+    const auto name = context_.pane().name();
+    fullStatusText.replace(0, name.length(), name);
+    
     const size_t lengthOfStatusBuffer = std::strlen(statusBuffer);
     fullStatusText.replace(
         fullStatusText.length() - lengthOfStatusBuffer,

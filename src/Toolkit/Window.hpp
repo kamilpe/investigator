@@ -29,8 +29,8 @@ protected:
     Display& display_;
 
     void clear() override;
-    void setColor(const Display::Pair pair) override;
-    void print(int x, int y, const std::string& str) override;
+    void setColor(const Display::Pair pair) const override;
+    void print(int x, int y, const std::string& str) const override;
     void putc(int x, int y, const char c) override;
     void lineh(int x, int y, int w) override;
     void bar(int x, int y, int w) override;

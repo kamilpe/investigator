@@ -12,7 +12,7 @@ public:
 
     ListWindowBase(IAppContext &context,
                const Items &items,
-               const typename Items::iterator selected) :
+               const typename Items::const_iterator selected) :
     Window(context.display(), 0, 0, 0, 0),
     items_(items),
     selected_(selected)
@@ -44,30 +44,21 @@ public:
     }
 
 protected:
-    virtual void printLine(typename Items::iterator &line) = 0;
+
+    virtual void printLine(int x, int y, bool selected, typename Items::const_iterator &line) const = 0;
     
-    void drawList(int count) const
+    void drawList(int x, int y, int count) const
     {
         for (auto it = items_.begin();
-             it != items_.end() && count > 0);
+             it != items_.end() && count > 0;
              ++it)
         {
-            if (it == selected_)
-            {
-                setColor(Display::Pair::Highlight);
-            }
-            else
-            {
-                setColor(Display::Pair::Dialog);
-            }
-
-            print(xpos, ypos, *it);
-            ++ypos;
+            printLine(x, y, (it == selected_), it);
+            y++;
         }
-        setColor(Display::Pair::Dialog);
     }
 
 private:
-    const Items items_;
+    const Items& items_;
     typename Items::const_iterator selected_;
 };

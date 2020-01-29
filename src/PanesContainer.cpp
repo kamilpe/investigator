@@ -17,6 +17,18 @@ Pane& PanesContainer::current() const
     return *current_;
 }
 
+PanesContainer::const_iterator PanesContainer::currentIterator() const
+{
+    for (auto it = panes_.begin(); it < panes_.end(); ++it)
+    {
+        if (it->get() == current_)
+        {
+            return it;
+        }
+    }
+    return panes_.end();
+}
+
 const PanesContainer::Panes& PanesContainer::allPanes() const
 {
     return panes_;
