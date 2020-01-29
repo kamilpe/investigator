@@ -27,14 +27,14 @@ std::string formatRow(const std::string& name, const std::string &linesCount)
     return label.str();
 }
 
-class CenterListWindow : public ListWindow
+class CenterListWindow : public ListWindowBase<std::string>
 {
 public:
     CenterListWindow(
         IAppContext &context,
         const Items &items,
-        const std::size_t selectedIndex)
-        : ListWindow(context,items,selectedIndex)
+        const typename Items::iterator selected)
+        : ListWindowBase(context,items,selected)
     {
         resize(context.display().width(), context.display().height());
     }
@@ -60,23 +60,7 @@ public:
         lineh(xpos,ypos, static_cast<int>(header.size()));
         ypos+=1;
 
-        for (auto it = items_.begin();
-             it != items_.end() && ypos < height();
-             ++it)
-        {
-            if (it == selected_)
-            {
-                setColor(Display::Pair::Highlight);
-            }
-            else
-            {
-                setColor(Display::Pair::Dialog);
-            }
-
-            print(xpos, ypos, *it);
-            ++ypos;
-        }
-        setColor(Display::Pair::Dialog);
+        drawList();
         print (2, height() - 2,  "[r] rename, [d] delete [Enter] select [ESC] cancel");
     }
 };
@@ -165,10 +149,10 @@ void PanesWindowController::rename()
     }
 }
 
-std::unique_ptr<ListWindow> PanesWindowController::createView() const
+std::unique_ptr<ListWindowBase<std::string>> PanesWindowController::createView() const
 {
-    ListWindow::Items items;
-    std::size_t selectedIndex = 0;
+    ListWindowBase<std::string>::Items items;
+/*    std::size_t selectedIndex = 0;
     for (const auto &item : context_.panes().allPanes())
     {
         items.push_back(
@@ -178,10 +162,10 @@ std::unique_ptr<ListWindow> PanesWindowController::createView() const
 
         if (item.get() == &context_.panes().current())
             selectedIndex = items.size() - 1;
-    }
+    }*/
 
     return std::make_unique<CenterListWindow>(
         context_,
         items,
-        selectedIndex);
+        items.begin());
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ListWindow.hpp"
+#include "ListWindowBase.hpp"
 #include "IAppContext.hpp"
 #include "Toolkit/IKeyboardInput.hpp"
 #include <memory>
@@ -11,10 +11,10 @@ public:
     BookmarksWindowController(IAppContext &context);
 
     bool parseKey(const int key, Keyboard &keyboard) override;
-    ListWindow& window();
+    ListWindowBase<std::string>& window();
 
 private:
     IAppContext &context_;
-    std::unique_ptr<ListWindow> listView_;
-    std::unique_ptr<ListWindow> createView() const;
+    std::unique_ptr<ListWindowBase<std::string>> listView_;
+    std::unique_ptr<ListWindowBase<std::string>> createView() const;
 };

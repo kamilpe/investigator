@@ -7,14 +7,14 @@ namespace
 {
 constexpr auto WindowWidth = 50;
 
-class LeftListWindow : public ListWindow
+class LeftListWindow : public ListWindowBase<std::string>
 {
 public:
     LeftListWindow(
         IAppContext &context,
         const Items &items,
-        const std::size_t selectedIndex)
-        : ListWindow(context,items,selectedIndex)
+        const typename Items::iterator selectedIndex)
+        : ListWindowBase<std::string>(context, items, selectedIndex)
     {
         resize(context.display().width(), context.display().height());
     }
@@ -77,9 +77,9 @@ bool BookmarksWindowController::parseKey(const int key, Keyboard& keyboard)
     return true;
 }
 
-std::unique_ptr<ListWindow> BookmarksWindowController::createView() const
+std::unique_ptr<ListWindowBase<std::string>> BookmarksWindowController::createView() const
 {
-    ListWindow::Items items;
+    ListWindowBase<std::string>::Items items;
     for (const auto &item : context_.bookmarks())
     {
         items.push_back(item.name);
@@ -88,10 +88,10 @@ std::unique_ptr<ListWindow> BookmarksWindowController::createView() const
     return std::make_unique<LeftListWindow>(
         context_,
         items,
-        0);
+        items.begin());
 }
 
-ListWindow& BookmarksWindowController::window()
+ListWindowBase<std::string>& BookmarksWindowController::window()
 {
     return *listView_;
 }

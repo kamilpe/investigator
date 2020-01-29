@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ListWindow.hpp"
+#include "ListWindowBase.hpp"
 #include "IAppContext.hpp"
 #include "Toolkit/IKeyboardInput.hpp"
 #include <memory>
@@ -16,10 +16,10 @@ public:
 
 private:
     IAppContext &context_;
-    std::unique_ptr<ListWindow> listView_;
+    std::unique_ptr<ListWindowBase<std::string>> listView_;
     bool accept_;
 
-    std::unique_ptr<ListWindow> createView() const;
+    std::unique_ptr<ListWindowBase<std::string>> createView() const;
     void rename();
     void remove();
 };
