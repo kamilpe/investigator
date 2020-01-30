@@ -1,4 +1,4 @@
-#include "LogViewport.hpp"
+#include "LogViewportWindow.hpp"
 
 #include <algorithm>
 #include <iterator>
@@ -25,7 +25,7 @@ namespace
     }
 }
 
-LogViewport::LogViewport(
+LogViewportWindow::LogViewportWindow(
     Display& display,
     const LogBufferView& bufferView,
     const int shift)
@@ -43,11 +43,11 @@ LogViewport::LogViewport(
 {
 }
 
-LogViewport::~LogViewport()
+LogViewportWindow::~LogViewportWindow()
 {
 }
 
-void LogViewport::resize(const int w, const int h)
+void LogViewportWindow::resize(const int w, const int h)
 {
     Window::resize(w, h-1);
     logPrinter_.changeWidth(width() - logLinePos_);
@@ -55,16 +55,15 @@ void LogViewport::resize(const int w, const int h)
     goTo(cursor_);
 }
 
-std::optional<LogBufferView::iterator> LogViewport::cursor() const
+std::optional<LogBufferView::iterator> LogViewportWindow::cursor() const
 {
     if (cursor_ == bufferView_.cend())
         return {};
     return cursor_;
 }
 
-void LogViewport::draw()
+void LogViewportWindow::draw()
 {
-
     if (bufferView_.size() == 0)
     {
         return;
@@ -94,17 +93,24 @@ void LogViewport::draw()
     endLine_ = lastLine_ + 1;
 }
 
-void LogViewport::markCursor(const LogBufferView::iterator& it)
+void LogViewportWindow::markCursor(const LogBufferView::iterator& it)
 {
-    underline(cursor_ == it);
+    if (focus_)
+    {
+        underline(false);
+        Window::highlight(cursor_ == it);
+    } else {
+        underline(cursor_ == it);
+        Window::highlight(false);
+    }
 }
 
-bool LogViewport::cursorIsOutsieWindow() const
+bool LogViewportWindow::cursorIsOutsieWindow() const
 {
     return (cursor_ < firstLine_ || cursor_ > lastLine_);
 }
 
-int LogViewport::printLogLine(const int y, const LogBufferView::iterator& it)
+int LogViewportWindow::printLogLine(const int y, const LogBufferView::iterator& it)
 {
     const auto& line = bufferView_.value(it);
     std::smatch match;
@@ -119,7 +125,7 @@ int LogViewport::printLogLine(const int y, const LogBufferView::iterator& it)
     return logPrinter_.print(logLinePos_, y, line, match);
 }
 
-void LogViewport::printLineNum(const int y, const LogBufferView::iterator& it)
+void LogViewportWindow::printLineNum(const int y, const LogBufferView::iterator& it)
 {
     std::string numBuffer(digitsCount_, ' ');
     std::string numStr(std::to_string((*it)+1));
@@ -130,14 +136,14 @@ void LogViewport::printLineNum(const int y, const LogBufferView::iterator& it)
     print(0, y, numBuffer.c_str());
 }
 
-void LogViewport::fillLineNumSpace(const int y)
+void LogViewportWindow::fillLineNumSpace(const int y)
 {
     std::string numBuffer(digitsCount_+1, ' ');
     setColor(Display::Pair::LineNum);
     print(0, y, numBuffer.c_str());
 }
 
-void LogViewport::up()
+void LogViewportWindow::up()
 {
     if (cursor_ > bufferView_.cbegin())
     {
@@ -149,7 +155,7 @@ void LogViewport::up()
     }
 }
 
-void LogViewport::alignViewportToCursor(const int fromTopCount)
+void LogViewportWindow::alignViewportToCursor(const int fromTopCount)
 {
     auto newViewportIt = cursor_;
     for (int lines = fromTopCount;
@@ -162,7 +168,7 @@ void LogViewport::alignViewportToCursor(const int fromTopCount)
     viewport_ = newViewportIt;
 }
 
-void LogViewport::down()
+void LogViewportWindow::down()
 {
     if (cursor_ + 1 < bufferView_.cend())
     {
@@ -174,7 +180,7 @@ void LogViewport::down()
     }
 }
 
-void LogViewport::pageUp()
+void LogViewportWindow::pageUp()
 {
     if (bufferView_.cbegin() > firstLine_ - 1)
     {
@@ -186,7 +192,7 @@ void LogViewport::pageUp()
     alignViewportToCursor(height());
 }
 
-void LogViewport::pageDown()
+void LogViewportWindow::pageDown()
 {
     if (lastLine_ + 1 >= bufferView_.cend())
     {
@@ -197,19 +203,19 @@ void LogViewport::pageDown()
     cursor_ = viewport_;
 }
 
-void LogViewport::top()
+void LogViewportWindow::top()
 {
     cursor_ = bufferView_.cbegin();
     viewport_ = bufferView_.cbegin();
 }
 
-void LogViewport::bottom()
+void LogViewportWindow::bottom()
 {
     cursor_ = bufferView_.cend() - 1;
     alignViewportToCursor(height());
 }
 
-void LogViewport::goTo(const LogBufferView::iterator& iter)
+void LogViewportWindow::goTo(const LogBufferView::iterator& iter)
 {
     cursor_ = iter;
     if (cursorIsOutsieWindow())
@@ -218,7 +224,7 @@ void LogViewport::goTo(const LogBufferView::iterator& iter)
     }
 }
 
-LogBufferView::iterator LogViewport::find(const std::string& expr)
+LogBufferView::iterator LogViewportWindow::find(const std::string& expr)
 {
     std::regex regexp{expr, std::regex::icase | std::regex::basic};
     for (auto it = cursor_ + 1;
@@ -237,12 +243,12 @@ LogBufferView::iterator LogViewport::find(const std::string& expr)
     return bufferView_.cend();
 }
 
-const LogBufferView& LogViewport::buffer() const
+const LogBufferView& LogViewportWindow::buffer() const
 {
     return bufferView_;
 }
 
-void LogViewport::highlight(const std::string& expr)
+void LogViewportWindow::highlight(const std::string& expr)
 {
     if (expr.empty())
     {
@@ -250,4 +256,9 @@ void LogViewport::highlight(const std::string& expr)
         return;
     }
     hlre_ = std::regex(expr, std::regex::icase | std::regex::basic);
+}
+
+void LogViewportWindow::setFocus(bool focus)
+{
+    focus_ = focus;
 }

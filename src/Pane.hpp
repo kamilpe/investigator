@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LogViewport.hpp"
+#include "LogViewportWindow.hpp"
 #include "LogViewportController.hpp"
 #include "Logs/LogBufferView.hpp"
 #include "Toolkit/Display.hpp"

@@ -20,21 +20,21 @@ public:
     Pane& pane() override;
     PanesContainer& panes() override;
     void setActive(Pane &pane) override;
-    LogViewport& window() override;
+    LogViewportWindow& window() override;
     BookmarksContainer& bookmarks() override;
 
 private:
     Display& display_;
     const LogBuffer& logBuffer_;
     PanesContainer panes_;
+    BookmarksContainer bookmarks_;
     Keyboard &keyboard_;
-    std::unique_ptr<LogViewport> window_;
-    std::unique_ptr<LogViewportController> controller_;
+    std::unique_ptr<LogViewportWindow> logViewportWindow_;
+    std::unique_ptr<LogViewportController> logViewportController_;
     std::unique_ptr<BookmarksWindowController> bookmarksController_;
     Statusbar statusBar_;
 
-
-    BookmarksContainer bookmarks_;
+    IKeyboardInput *currentFocusInput_ = nullptr;
     std::string lastHighlight_;
     std::string lastSearch_;
 
@@ -47,4 +47,5 @@ private:
     void showHelp();
     void bookmark();
     void switchBookmarkPanel();
+    void switchFocus();
 };

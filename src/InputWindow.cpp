@@ -98,7 +98,13 @@ void InputWindow::backspace()
     }
 }
 
-std::string InputWindow::content() const
+const std::string& InputWindow::content() const
 {
     return content_;
+}
+
+void InputWindow::setCursor(const std::string::const_iterator& cursor)
+{
+    cursor_ = content_.begin() + std::distance(content_.cbegin(), cursor);
+    removeAtFirst_ = false;
 }

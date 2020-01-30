@@ -1,7 +1,7 @@
 #pragma once
 #include "PanesContainer.hpp"
 #include "Pane.hpp"
-#include "LogViewport.hpp"
+#include "LogViewportWindow.hpp"
 #include "Bookmark.hpp"
 
 class IAppContext
@@ -14,6 +14,6 @@ public:
     virtual Pane& pane() = 0;
     virtual PanesContainer& panes() = 0;
     virtual void setActive(Pane &pane) = 0;
-    virtual LogViewport& window() = 0;
+    virtual LogViewportWindow& window() = 0;
     virtual BookmarksContainer& bookmarks() = 0;
 };

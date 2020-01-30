@@ -8,7 +8,7 @@ class Display
 public:
     enum class Pair
     {
-        LogLine = 1,
+        RegularLine = 1,
         LineNum,
         LogLineWarning,
         LogLineError,
@@ -19,7 +19,8 @@ public:
         Highlight,
         NotifyWindow,
         ProgressBar,
-        Bookmark
+        BlueBorder,
+        YellowBorder
     };
 
     enum class CursorMode

@@ -2,7 +2,7 @@
 #include <ncurses.h>
 
 
-LogViewportController::LogViewportController(LogViewport& window)
+LogViewportController::LogViewportController(LogViewportWindow& window)
     : window_(window)
 {
 }

@@ -128,7 +128,20 @@ void Window::bordering()
             0,0,0,0,0,0,0,0);
 }
 
-void Window::underline(const bool value)
+void Window::underline(const bool value) const
+{
+    if (value)
+    {
+        wattron(static_cast<WINDOW*>(winPtr_), A_UNDERLINE);
+    }
+    else
+    {
+        wattroff(static_cast<WINDOW*>(winPtr_), A_UNDERLINE);
+    }
+
+}
+
+void Window::highlight(const bool value) const
 {
     if (value)
     {

@@ -77,9 +77,11 @@ void PanesWindowController::rename()
 
     InputWindow inputWindow{
         context_.display(),
-        "New name:", selectedPane.name(),
+        "New name:",
+        selectedPane.name(),
         PanesWindow::NameWidth,
         PanesWindow::NameWidth + 4};
+    inputWindow.setCursor(inputWindow.content().end());
 
     InputWindowController controller{inputWindow};
     context_.keyboard().parseKeys(controller);
