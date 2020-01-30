@@ -4,21 +4,22 @@ set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Werror")
 
 set(SRC_FILES
- src/CursesToolkit/Display.cpp
- src/CursesToolkit/Keyboard.cpp
- src/CursesToolkit/Window.cpp
+ src/Toolkit/Display.cpp
+ src/Toolkit/Keyboard.cpp
+ src/Toolkit/Window.cpp
  src/Logs/LogBuffer.cpp
  src/Logs/LogBufferView.cpp
  src/main.cpp
  src/ArgParser.cpp
- src/LogViewport.cpp
+ src/LogViewportWindow.cpp
  src/LogViewportController.cpp
  src/MainController.cpp
  src/Pane.cpp
  src/PanesContainer.cpp
  src/Statusbar.cpp
- src/ListWindow.cpp
+ src/PanesWindow.cpp
  src/PanesWindowController.cpp
+ src/BookmarksWindow.cpp
  src/BookmarksWindowController.cpp
  src/InputWindow.cpp
  src/InputWindowController.cpp
