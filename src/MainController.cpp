@@ -7,11 +7,6 @@
 #include <ncurses.h>
 #include <functional>
 
-namespace
-{
-
-}
-
 MainController::MainController(Display& display, const LogBuffer& logBuffer, Keyboard &keyboard)
     : display_(display)
     , logBuffer_(logBuffer)
@@ -21,7 +16,7 @@ MainController::MainController(Display& display, const LogBuffer& logBuffer, Key
     , logViewportController_(std::make_unique<LogViewportController>(*logViewportWindow_.get()))
     , statusBar_(display, *this)
 {
-    updateViewportWindowPosition();
+    updateViewportWindowPlacement();
 }
 
 bool MainController::parseKey(const int key, Keyboard &keyboard)
@@ -48,23 +43,28 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
     case 'h':
         highlight();
         break;
-    case ' ':
+    case 'm':
         bookmark();
         break;
-    case 'b':
+    case 't':
         toggleBookmarkPanel();
         break;
-    case '\t':
+    case 'b':
         selectPane();
         break;
     case '?':
         showHelp();
         break;
-    case KEY_LEFT:
-    case KEY_RIGHT:
+    case '\t':
+        if (!bookmarksController_ && bookmarks().size() > 0) {
+            toggleBookmarkPanel();
+        }
         switchFocus();
         break;
-    default: return currentFocusInput().parseKey(key, keyboard);
+    default:
+        auto retval = currentFocusInput().parseKey(key, keyboard);
+        updateBookmarkAndViewport();
+        return retval;
     }
     return true;
 }
@@ -105,9 +105,41 @@ void MainController::bookmark()
 
     if (controller.accepted())
     {
-        bookmarks_.emplace_back(inputWindow.content(), **window().cursor());
-        /*if (!bookmarksController_)
-            switchBookmarkPanel();*/
+        bookmarks_.emplace_back(inputWindow.content(), **logWindow().cursor());
+        updateBookmarkFromViewport();
+    }
+}
+
+void MainController::updateBookmarkAndViewport()
+{
+    switch (currentFocus_) {
+        case Focus::LogViewport:
+            updateBookmarkFromViewport();
+            break;
+        case Focus::Bookmarks:
+            updateViewportFromBookmark();
+            break;
+    }
+}
+
+void MainController::updateBookmarkFromViewport()
+{
+    if (!bookmarksController_) {
+        return; // TODO: needed?
+    }
+    bookmarksController_->selectClosest(**logWindow().cursor());
+}
+
+void MainController::updateViewportFromBookmark()
+{
+    if (!bookmarksController_) {
+        return; // TODO: needed?
+    }
+    
+    if (bookmarksWindow_->selected() != bookmarksWindow_->items().cend())
+    {
+        const auto selectedBookmark = bookmarksWindow_->selected();
+        logViewportWindow_->goTo(pane().buffer().findClosestTo(selectedBookmark->id));
     }
 }
 
@@ -205,23 +237,25 @@ void MainController::setActive(Pane &pane)
     panes_.setCurrent(pane);
     logViewportWindow_ = std::move(newLogViewportWindow);
     logViewportController_ = std::move(newlogViewportController);
-    updateViewportWindowPosition();
+    updateViewportWindowPlacement();
 }
 
 void MainController::toggleBookmarkPanel()
 {
     if (!bookmarksController_)
     {
-        bookmarksController_ = std::make_unique<BookmarksWindowController>(*this);
+        bookmarksWindow_ = std::make_unique<BookmarksWindow>(*this, bookmarks(), bookmarks().begin());
+        bookmarksController_ = std::make_unique<BookmarksWindowController>(*bookmarksWindow_.get());
     }
     else
     {
         bookmarksController_ = nullptr;
+        bookmarksWindow_ = nullptr;
     }
-    updateViewportWindowPosition();
+    updateViewportWindowPlacement();
 }
 
-void MainController::updateViewportWindowPosition()
+void MainController::updateViewportWindowPlacement()
 {
     if (bookmarksController_)
     {
@@ -243,12 +277,12 @@ void MainController::switchFocus()
         if (currentFocus_ != Focus::Bookmarks)
         {
             currentFocus_ = Focus::Bookmarks;
-            bookmarksController_->setFocus(true);
+            bookmarksWindow_->setFocus(true);
             logViewportWindow_->setFocus(false);
             return;
         }
         currentFocus_ = Focus::LogViewport;
-        bookmarksController_->setFocus(false);
+        bookmarksWindow_->setFocus(false);
         logViewportWindow_->setFocus(true);
     }
 }
@@ -275,7 +309,7 @@ PanesContainer& MainController::panes()
     return panes_;
 }
 
-LogViewportWindow& MainController::window()
+LogViewportWindow& MainController::logWindow()
 {
     return *logViewportWindow_;
 }

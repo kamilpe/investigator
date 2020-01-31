@@ -29,7 +29,7 @@ void Statusbar::draw()
     std::size_t procentage = 0;
     
     const auto linesCount = context_.pane().buffer().size();
-    const auto cursor = context_.window().cursor();
+    const auto cursor = context_.logWindow().cursor();
     if (cursor)
     {
         cursorPos = std::distance(context_.pane().buffer().cbegin(), *cursor) + 1;

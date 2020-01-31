@@ -7,13 +7,12 @@
 class BookmarksWindowController :  public IKeyboardInput
 {
 public:
-    BookmarksWindowController(IAppContext &context);
+    BookmarksWindowController(BookmarksWindow& window);
 
     bool parseKey(const int key, Keyboard &keyboard) override;
-    void setFocus(bool focus);
+    void selectClosest(int id);
 
 private:
-    IAppContext &context_;
-    std::unique_ptr<BookmarksWindow> listWindow_;
+    BookmarksWindow& listWindow_;
     void createView();
 };

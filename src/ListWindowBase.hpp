@@ -22,14 +22,25 @@ public:
     ~ListWindowBase()
     {
     }
+    
+    void select(const typename Items::const_iterator selected)
+    {
+        selected_ = selected;
+    }
 
     void up()
     {
-        if (selected_ > items_.begin())
+        if (selected_ == items_.cend())
+            return;
+        
+        if (selected_ > items_.cbegin())
             selected_--;
     }
     void down()
     {
+        if (selected_ == items_.cend())
+            return;
+    
         if (selected_ < items_.end() - 1)
             selected_++;
     }
