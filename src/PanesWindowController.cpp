@@ -1,6 +1,5 @@
 #include "PanesWindowController.hpp"
 #include "InputWindowController.hpp"
-#include "QuestionWindow.hpp"
 #include "QuestionWindowController.hpp"
 #include <ncurses.h>
 

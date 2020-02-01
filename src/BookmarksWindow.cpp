@@ -57,3 +57,17 @@ void BookmarksWindow::draw()
         print (2, height() - 2,  "                       ");
     }
 }
+
+void BookmarksWindow::selectClosest(int id)
+{
+    const auto predicate = [id](const Bookmark& bookmark) {
+        return bookmark.id <= id;
+    };
+    
+    auto it = std::find_if(items().crbegin(), items().crend(), predicate);
+    if (it == items().crend()) {
+        select(items().cbegin());
+        return;
+    }
+    select(it.base() - 1);
+}

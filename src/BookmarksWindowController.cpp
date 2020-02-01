@@ -1,10 +1,12 @@
 #include "BookmarksWindowController.hpp"
 #include "InputWindowController.hpp"
+#include "QuestionWindowController.hpp"
 #include <ncurses.h>
 #include <algorithm>
 
-BookmarksWindowController::BookmarksWindowController(BookmarksWindow& window)
-    : listWindow_(window)
+BookmarksWindowController::BookmarksWindowController(IAppContext &context, BookmarksWindow& window)
+    : context_(context)
+    , window_(window)
 {
 }
 
@@ -13,26 +15,49 @@ bool BookmarksWindowController::parseKey(const int key, Keyboard& keyboard)
     switch (key)
     {
     case KEY_UP:
-        listWindow_.up();
+        window_.up();
         break;
     case KEY_DOWN:
-        listWindow_.down();
+        window_.down();
+        break;
+    case 'r':
+        rename();
+        break;
+    case 'd':
+        remove();
         break;
     }
     return true;
 }
 
-void BookmarksWindowController::selectClosest(int id) // TODO: move to the Window, change to goTo(findClosest)
+void BookmarksWindowController::rename()
 {
-    const auto predicate = [id](const Bookmark& bookmark) {
-        return bookmark.id <= id;
-    };
-    
-    const auto& items = listWindow_.items();
-    auto it = std::find_if(items.crbegin(), items.crend(), predicate);
-    if (it == items.crend()) {
-        listWindow_.select(items.cbegin());
+    auto selected = window_.selected();
+    if (selected == window_.items().end()) {
         return;
     }
-    listWindow_.select(it.base() - 1);
+    
+    InputWindow inputWindow{
+        context_.display(),
+        "New name:",
+        selected->name,
+        BookmarksWindow::NameWidth,
+        BookmarksWindow::NameWidth+4};
+    InputWindowController controller{inputWindow};
+    context_.keyboard().parseKeys(controller);
+}
+
+void BookmarksWindowController::remove()
+{
+    auto selected = window_.selected();
+    if (selected == window_.items().end()) {
+        return;
+    }
+    
+    QuestionWindow question{
+        context_.display(),
+            "Are you sure that you want to remove:\n* " + selected->name+ " *",
+            {"Yes","Cancel"}};
+    QuestionWindowController controller{question};
+    context_.keyboard().parseKeys(controller);
 }
