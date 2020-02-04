@@ -19,6 +19,7 @@ set(SRC_FILES
  src/Statusbar.cpp
  src/PanesWindow.cpp
  src/PanesWindowController.cpp
+ src/Bookmark.cpp
  src/BookmarksWindow.cpp
  src/BookmarksWindowController.cpp
  src/InputWindow.cpp
