@@ -10,16 +10,16 @@ class BookmarksWindow : public BookmarksWindowList
 public:
     static constexpr auto NameWidth = 48;
     static constexpr auto WindowWidth = 50;
-    
+
     BookmarksWindow(
         IAppContext &context,
         const Items &items,
         const typename Items::const_iterator selected);
-    
+
     void resize(const int w, const int h) override;
     void draw() override;
     void setFocus(bool focus);
-    void selectClosest(int id);
+    void selectClosest(LineId id);
 
 protected:
     void printLine(
@@ -27,7 +27,7 @@ protected:
         int y,
         bool selected,
         typename Items::const_iterator &line) const override;
-    
+
 private:
     bool focus_ = false;
 };

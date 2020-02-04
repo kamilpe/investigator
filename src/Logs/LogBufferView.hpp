@@ -4,11 +4,10 @@
 #include <functional>
 #include <regex>
 
-
 class LogBufferView
 {
 public:
-    using iterator = std::vector<int>::const_iterator;
+    using iterator = std::vector<LineId>::const_iterator;
     using Progress = float;
     using GrepObservator = std::function<void(const Progress& progress)>;
 
@@ -21,11 +20,11 @@ public:
     LogBufferView::iterator cbegin() const;
     LogBufferView::iterator cend() const;
     std::size_t size() const;
-    const std::vector<int>& lines() const;
+    const std::vector<LineId>& lines() const;
     std::string value(const iterator it) const; // TODO: const std::string& ?
-    iterator findClosestTo(int id) const;
+    iterator findClosestTo(LineId id) const;
 
 private:
     const LogBuffer& buffer_;
-    std::vector<int> lines_;
+    std::vector<LineId> lines_;
 };

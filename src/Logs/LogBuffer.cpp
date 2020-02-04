@@ -12,7 +12,7 @@ const std::string& LogBuffer::name() const
     return name_;
 }
 
-char const * LogBuffer::line(const unsigned id) const
+char const * LogBuffer::line(const LineId id) const
 {
     return mappedFile_.lines().at(id);
 }

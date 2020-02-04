@@ -4,7 +4,6 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <iostream>
 
 
 void MemoryMappedFile::open(const std::string& fileName)
@@ -27,9 +26,6 @@ void MemoryMappedFile::open(const std::string& fileName)
     // close(fd_);
     endOfBuffer_ = buffer_ + length_;
     isOpen_ = true;
-
-    std::cout << "parsing..." << std::endl;
-
     processLines();
 }
 
