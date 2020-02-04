@@ -5,18 +5,18 @@ Log analysis tool with support for bookmarks and multiple buffers. Investigator 
 Release plan
 ---------------
 
-### Basic functionality
+### 1.0: Basic functionality
 - fast file loading (for big files, mmap for posix)
 - error and warnings defined in config file/Users/kamil/projects/investigator/src/ArgParser.hpp
 
-### Additional functionality
+### 1.1: Additional functionality
 - re-creating workspace after opening the file
 - grepping based on the grep tool
 
 ### 1.2: Additional functionality
 - readline support for the history
 
-### Support for plugins
+### 2.0: Support for plugins
 - attach to all controllers
 - attach to all lists with callbacks
 - access to instance objects for all interfaces
