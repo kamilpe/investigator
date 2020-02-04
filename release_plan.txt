@@ -1,10 +1,16 @@
-1.0: Complete functionality
+1.0: Basic functionality
 ====================================================================
 - fast file loading (for big files, mmap for posix)
-- grepping based on the grep tool
-- readline support for the history
+- error and warnings defined in config file/Users/kamil/projects/investigator/src/ArgParser.hpp
+
+1.1: Additional functionality
+====================================================================
 - re-creating workspace after opening the file
-- error and warnings defined in config file
+- grepping based on the grep tool
+
+1.2: Additional functionality
+====================================================================
+- readline support for the history
 
 2.0: Support for plugins
 ====================================================================
@@ -12,7 +18,7 @@
 - attach to all lists with callbacks
 - access to instance objects for all interfaces
 
-2.5: Windows support
+2.5: Support for Windows
 ====================================================================
 - fast file loading (CreateFile/CreateFileMapping/MapViewOfFile)
 - installer with desktop integration

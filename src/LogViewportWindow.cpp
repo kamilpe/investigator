@@ -6,7 +6,7 @@
 
 namespace
 {
-    int getMaxIdFromView(const LogBufferView& bufferView)
+    LineId getMaxIdFromView(const LogBufferView& bufferView)
     {
         const auto it = std::max_element(bufferView.lines().begin(), bufferView.lines().end());
         if (it != bufferView.lines().end())
@@ -30,7 +30,7 @@ LogViewportWindow::LogViewportWindow(
     const LogBufferView& bufferView)
     : Window(display, 0, 0, display.width(), display.height()-1)
     , bufferView_(bufferView)
-    , digitsCount_(getDigitsCount(getMaxIdFromView(bufferView)))
+    , digitsCount_(getDigitsCount(static_cast<int>(getMaxIdFromView(bufferView))))
     , logLinePos_(digitsCount_ + 1)
     , logPrinter_(*this, width() - logLinePos_)
     , viewport_(bufferView.cbegin())
