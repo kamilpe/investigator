@@ -30,8 +30,7 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
         if (askForExit())
             return false;
         break;
-    case 'j':
-    case 'G':
+    case 'l':
         gotoLine();
         break;
     case 'g':
@@ -49,9 +48,10 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
         bookmark();
         break;
     case 't':
+    case ' ':
         toggleBookmarkPanel();
         break;
-    case 'b':
+    case '\t':
         selectPane();
         break;
     case '?':
@@ -59,7 +59,6 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
         break;
     case KEY_LEFT:
     case KEY_RIGHT:
-    case '\t':
         if (!bookmarksController_ && bookmarks().size() > 0) {
             toggleBookmarkPanel();
         }

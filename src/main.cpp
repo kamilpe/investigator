@@ -26,50 +26,31 @@ int main(int argv, char **argc)
         return EXIT_FAILURE;
     }
 
-    std::cout << "Loading..." << std::endl;
-
-    LogBuffer log{args.files()};
-    if (!log.initialized())
-    {
-        std::cout << "Unable to read input files" << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    std::cout << "Complete" << std::endl;
-
-    LogBufferView view{log};
-    Display display;
+    Display *mainDisplay = nullptr;
+    int returnValue = EXIT_SUCCESS;
     try
     {
+        std::cout << "Loading logs..." << std::endl;
+        LogBuffer log{args.files()};
+        LogBufferView view{log};
+
+        Display display;
         display.start();
-    }
-    catch (const std::exception& e)
-    {
-        printException(e);
-        return EXIT_FAILURE;
-    }
+        mainDisplay = &display;
 
-    Keyboard keyboard{display};
-    try
-    {
+        Keyboard keyboard{display};
         keyboard.start();
-    }
-    catch (const std::exception& e)
-    {
-        printException(e);
-        return EXIT_FAILURE;
-    }
 
-    try
-    {
         MainController mainController{display, log, keyboard};
         keyboard.parseKeys(mainController);
+
+    } catch (const std::exception& e) {
+        printException(e);
+        returnValue = EXIT_FAILURE;
     }
-    catch (const std::exception& e)
-    {
-        // TODO: report also graphical error
-        std::cout << "Error: " << e.what();
-    }
-    display.stop();
-    return EXIT_SUCCESS;
+
+    if (mainDisplay)
+        mainDisplay->stop();
+
+    return returnValue;
 }

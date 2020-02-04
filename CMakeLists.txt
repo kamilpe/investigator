@@ -9,6 +9,7 @@ set(SRC_FILES
  src/Toolkit/Window.cpp
  src/Logs/LogBuffer.cpp
  src/Logs/LogBufferView.cpp
+ src/Logs/MemoryMappedFile.cpp
  src/main.cpp
  src/ArgParser.cpp
  src/LogViewportWindow.cpp

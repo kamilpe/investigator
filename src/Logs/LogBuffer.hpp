@@ -1,5 +1,6 @@
 #pragma once
 
+#include "MemoryMappedFile.hpp"
 #include <vector>
 #include <string>
 
@@ -10,11 +11,10 @@ public:
 
     bool initialized() const;
     const std::string& name() const;
-    const char* line(const unsigned id) const;
+    char const * line(const unsigned id) const;
     unsigned long linesCount() const;
 
 private:
     const std::string name_;
-    bool initialized_ = false;
-    std::vector<std::string> lines_; // TODO: mmap
+    MemoryMappedFile mappedFile_;
 };
