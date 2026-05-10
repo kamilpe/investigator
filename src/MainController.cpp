@@ -102,8 +102,8 @@ void MainController::bookmark()
     if (controller.accepted())
     {
         bookmarks_.emplace_back(inputWindow.content(), **window().cursor());
-        if (!bookmarksController_)
-            switchBookmarkPanel();
+        /*if (!bookmarksController_)
+            switchBookmarkPanel();*/
     }
 }
 
@@ -247,7 +247,7 @@ Keyboard& MainController::keyboard()
     return keyboard_;
 }
 
-const std::vector<Bookmark>& MainController::bookmarks()
+BookmarksContainer& MainController::bookmarks()
 {
     return bookmarks_;
 }

@@ -25,10 +25,10 @@ void Statusbar::draw()
 {
     std::fill(fullStatusText.begin(), fullStatusText.end(), ' ');
 
-    const auto linesCount = context_.pane().buffer().size();
-
     std::size_t cursorPos = 0;
     std::size_t procentage = 0;
+    
+    const auto linesCount = context_.pane().buffer().size();
     const auto cursor = context_.window().cursor();
     if (cursor)
     {

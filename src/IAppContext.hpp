@@ -15,5 +15,5 @@ public:
     virtual PanesContainer& panes() = 0;
     virtual void setActive(Pane &pane) = 0;
     virtual LogViewport& window() = 0;
-    virtual const std::vector<Bookmark>& bookmarks() = 0;
+    virtual BookmarksContainer& bookmarks() = 0;
 };
