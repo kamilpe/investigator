@@ -151,7 +151,7 @@ void MainController::search()
     keyboard_.parseKeys(controller);
     const auto it = logViewportWindow_->find(inputWindow.content());
     logViewportWindow_->goTo(it);
-    logViewportWindow_->highlight(inputWindow.content());
+    logViewportWindow_->highlighting(inputWindow.content());
 
     lastSearch_ = inputWindow.content();
 }
@@ -186,7 +186,7 @@ void MainController::highlight()
     InputWindow inputWindow{display_, "Highlight:", lastHighlight_, 500, 100};
     InputWindowController controller{inputWindow};
     keyboard_.parseKeys(controller);
-    logViewportWindow_->highlight(inputWindow.content());
+    logViewportWindow_->highlighting(inputWindow.content());
 
     lastHighlight_ = inputWindow.content();
 }

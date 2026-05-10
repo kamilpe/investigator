@@ -248,7 +248,7 @@ const LogBufferView& LogViewportWindow::buffer() const
     return bufferView_;
 }
 
-void LogViewportWindow::highlight(const std::string& expr)
+void LogViewportWindow::highlighting(const std::string& expr)
 {
     if (expr.empty())
     {

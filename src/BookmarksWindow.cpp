@@ -51,8 +51,8 @@ void BookmarksWindow::draw()
     
     setColor(Display::Pair::RegularLine);
     if (focus_) {
-        print (2, height() - 2,  "[r] rename, [d] delete");
+        print (2, height() - 2,  "[r] rename | [d] delete");
     } else {
-        print (2, height() - 2,  "                      ");
+        print (2, height() - 2,  "                       ");
     }
 }

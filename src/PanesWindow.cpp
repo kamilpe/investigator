@@ -61,6 +61,6 @@ void PanesWindow::draw()
     drawList(xpos, ypos, height() - 4);
     setColor(Display::Pair::Dialog);
     
-    print (2, height() - 2,  "[r] rename, [d] delete [Enter] select [ESC] cancel");
+    print (2, height() - 2,  "[r] rename | [d] delete | [Enter] select | [ESC] cancel");
 }
 

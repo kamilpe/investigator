@@ -25,7 +25,7 @@ public:
     void goTo(const LogBufferView::iterator& iter);
     std::optional<LogBufferView::iterator> cursor() const;
     LogBufferView::iterator find(const std::string& expr);
-    void highlight(const std::string& expr);
+    void highlighting(const std::string& expr);
     const LogBufferView& buffer() const;
     void setFocus(bool focus);
 
