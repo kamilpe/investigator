@@ -29,6 +29,7 @@
 		8E1555C523D7905E008EF97F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E1555AE23D7905E008EF97F /* main.cpp */; };
 		8E1555C623D7905E008EF97F /* LogViewportController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E1555B023D7905E008EF97F /* LogViewportController.cpp */; };
 		8E1555C923D7924E008EF97F /* libncurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1555C823D791CC008EF97F /* libncurses.tbd */; };
+		8E64804323E237EF009BB14E /* PanesWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E64804123E237EF009BB14E /* PanesWindow.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,8 +57,6 @@
 		8E15558723D7905E008EF97F /* InputWindowController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputWindowController.hpp; sourceTree = "<group>"; };
 		8E15558823D7905E008EF97F /* QuestionWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestionWindow.cpp; sourceTree = "<group>"; };
 		8E15558923D7905E008EF97F /* Statusbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Statusbar.cpp; sourceTree = "<group>"; };
-		8E15558A23D7905E008EF97F /* PanesContainer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PanesContainer.hpp; sourceTree = "<group>"; };
-		8E15558B23D7905E008EF97F /* Pane.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Pane.hpp; sourceTree = "<group>"; };
 		8E15558C23D7905E008EF97F /* InputWindow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputWindow.hpp; sourceTree = "<group>"; };
 		8E15558D23D7905E008EF97F /* LogViewport.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogViewport.hpp; sourceTree = "<group>"; };
 		8E15558E23D7905E008EF97F /* LogLinePrinter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogLinePrinter.hpp; sourceTree = "<group>"; };
@@ -97,6 +96,12 @@
 		8E1DDFF023E21F8D005A606A /* ListWindowBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ListWindowBase.hpp; sourceTree = "<group>"; };
 		8E1DDFF123E2218D005A606A /* BookmarksWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BookmarksWindowController.hpp; sourceTree = "<group>"; };
 		8E1DDFF223E221A9005A606A /* PanesWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PanesWindowController.hpp; sourceTree = "<group>"; };
+		8E64803C23E23098009BB14E /* Pane.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Pane.hpp; sourceTree = "<group>"; };
+		8E64803D23E2309F009BB14E /* PanesContainer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PanesContainer.hpp; sourceTree = "<group>"; };
+		8E64803E23E230AA009BB14E /* InputWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InputWindow.hpp; sourceTree = "<group>"; };
+		8E64804123E237EF009BB14E /* PanesWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PanesWindow.cpp; path = src/PanesWindow.cpp; sourceTree = SOURCE_ROOT; };
+		8E64804223E237EF009BB14E /* PanesWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PanesWindow.hpp; path = src/PanesWindow.hpp; sourceTree = SOURCE_ROOT; };
+		8E64804423E23C57009BB14E /* Statusbar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Statusbar.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,46 +136,50 @@
 		8E15557D23D7905E008EF97F /* src */ = {
 			isa = PBXGroup;
 			children = (
-				8E15559F23D7905E008EF97F /* Toolkit */,
-				8E15559423D7905E008EF97F /* Logs */,
-				8E15557E23D7905E008EF97F /* MainController.cpp */,
-				8E1DDFF023E21F8D005A606A /* ListWindowBase.hpp */,
-				8E15558023D7905E008EF97F /* ProgressWindow.cpp */,
 				8E15558123D7905E008EF97F /* ArgParser.cpp */,
-				8E15558223D7905E008EF97F /* IAppContext.hpp */,
-				8E15558323D7905E008EF97F /* QuestionWindowController.cpp */,
+				8E1555A923D7905E008EF97F /* ArgParser.hpp */,
+				8E15559123D7905E008EF97F /* Bookmark.hpp */,
 				8E15558423D7905E008EF97F /* BookmarksWindowController.cpp */,
 				8E1DDFF123E2218D005A606A /* BookmarksWindowController.hpp */,
+				8E15559223D7905E008EF97F /* Help.hpp */,
+				8E15558223D7905E008EF97F /* IAppContext.hpp */,
+				8E15559B23D7905E008EF97F /* InputWindow.cpp */,
+				8E15558C23D7905E008EF97F /* InputWindow.hpp */,
+				8E15558F23D7905E008EF97F /* InputWindowController.cpp */,
+				8E15558723D7905E008EF97F /* InputWindowController.hpp */,
+				8E1555AA23D7905E008EF97F /* ListWindow.hpp */,
+				8E1DDFF023E21F8D005A606A /* ListWindowBase.hpp */,
+				8E15559D23D7905E008EF97F /* LogLinePrinter.cpp */,
+				8E15558E23D7905E008EF97F /* LogLinePrinter.hpp */,
+				8E15559423D7905E008EF97F /* Logs */,
+				8E15559C23D7905E008EF97F /* LogViewport.cpp */,
+				8E15558D23D7905E008EF97F /* LogViewport.hpp */,
+				8E1555B023D7905E008EF97F /* LogViewportController.cpp */,
+				8E15558623D7905E008EF97F /* LogViewportController.hpp */,
+				8E1555AE23D7905E008EF97F /* main.cpp */,
+				8E15557E23D7905E008EF97F /* MainController.cpp */,
+				8E15559E23D7905E008EF97F /* MainController.hpp */,
+				8E15559A23D7905E008EF97F /* Pane.cpp */,
+				8E64803C23E23098009BB14E /* Pane.hpp */,
+				8E15559923D7905E008EF97F /* PanesContainer.cpp */,
+				8E64803D23E2309F009BB14E /* PanesContainer.hpp */,
+				8E64804123E237EF009BB14E /* PanesWindow.cpp */,
+				8E64804223E237EF009BB14E /* PanesWindow.hpp */,
 				8E15558523D7905E008EF97F /* PanesWindowController.cpp */,
 				8E1DDFF223E221A9005A606A /* PanesWindowController.hpp */,
-				8E15558623D7905E008EF97F /* LogViewportController.hpp */,
-				8E15558723D7905E008EF97F /* InputWindowController.hpp */,
-				8E15558823D7905E008EF97F /* QuestionWindow.cpp */,
-				8E15558923D7905E008EF97F /* Statusbar.cpp */,
-				8E15558A23D7905E008EF97F /* PanesContainer.hpp */,
-				8E15558B23D7905E008EF97F /* Pane.hpp */,
-				8E15558C23D7905E008EF97F /* InputWindow.hpp */,
-				8E15558D23D7905E008EF97F /* LogViewport.hpp */,
-				8E15558E23D7905E008EF97F /* LogLinePrinter.hpp */,
-				8E15558F23D7905E008EF97F /* InputWindowController.cpp */,
-				8E15559023D7905E008EF97F /* QuestionWindow.hpp */,
-				8E15559123D7905E008EF97F /* Bookmark.hpp */,
-				8E15559223D7905E008EF97F /* Help.hpp */,
-				8E15559323D7905E008EF97F /* Statusbar.hpp */,
-				8E15559923D7905E008EF97F /* PanesContainer.cpp */,
-				8E15559A23D7905E008EF97F /* Pane.cpp */,
-				8E15559B23D7905E008EF97F /* InputWindow.cpp */,
-				8E15559C23D7905E008EF97F /* LogViewport.cpp */,
-				8E15559D23D7905E008EF97F /* LogLinePrinter.cpp */,
-				8E15559E23D7905E008EF97F /* MainController.hpp */,
-				8E1555A923D7905E008EF97F /* ArgParser.hpp */,
-				8E1555AA23D7905E008EF97F /* ListWindow.hpp */,
+				8E15558023D7905E008EF97F /* ProgressWindow.cpp */,
 				8E1555AB23D7905E008EF97F /* ProgressWindow.hpp */,
+				8E15558823D7905E008EF97F /* QuestionWindow.cpp */,
+				8E15559023D7905E008EF97F /* QuestionWindow.hpp */,
+				8E15558323D7905E008EF97F /* QuestionWindowController.cpp */,
 				8E1555AC23D7905E008EF97F /* QuestionWindowController.hpp */,
+				8E15558923D7905E008EF97F /* Statusbar.cpp */,
+				8E64804423E23C57009BB14E /* Statusbar.hpp */,
+				8E15559323D7905E008EF97F /* Statusbar.hpp */,
+				8E15559F23D7905E008EF97F /* Toolkit */,
+				8E64803E23E230AA009BB14E /* InputWindow.hpp */,
 				8E1555AD23D7905E008EF97F /* BookmarksWindowController.hpp */,
-				8E1555AE23D7905E008EF97F /* main.cpp */,
 				8E1555AF23D7905E008EF97F /* PanesWindowController.hpp */,
-				8E1555B023D7905E008EF97F /* LogViewportController.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -286,6 +295,7 @@
 				8E1555C223D7905E008EF97F /* Window.cpp in Sources */,
 				8E1555BA23D7905E008EF97F /* InputWindowController.cpp in Sources */,
 				8E1555C323D7905E008EF97F /* Display.cpp in Sources */,
+				8E64804323E237EF009BB14E /* PanesWindow.cpp in Sources */,
 				8E1555BE23D7905E008EF97F /* Pane.cpp in Sources */,
 				8E1555BC23D7905E008EF97F /* LogBuffer.cpp in Sources */,
 			);

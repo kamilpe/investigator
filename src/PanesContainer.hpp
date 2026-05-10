@@ -14,6 +14,7 @@ public:
     Pane& addPane(std::unique_ptr<Pane>);
     void setCurrent(Pane &pane);
     Pane& current() const;
+    const_iterator currentIterator() const;
     void remove(Pane &pane);
     const Panes& allPanes() const;
 

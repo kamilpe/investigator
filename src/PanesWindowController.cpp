@@ -3,74 +3,11 @@
 #include "QuestionWindow.hpp"
 #include "QuestionWindowController.hpp"
 #include <ncurses.h>
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-
-
-namespace
-{
-constexpr auto NameWidth = 53;
-constexpr auto WindowWidth = 60;
-
-std::string formatRow(const std::string& name, const std::string &linesCount)
-{
-    std::stringstream lines;
-    lines << "  " << linesCount;
-    const auto maxWidth = 3 + NameWidth - lines.str().size();
-
-    std::stringstream label;
-    label << std::setw(static_cast<unsigned int>(maxWidth)) << std::left
-          << name.substr(0, maxWidth)
-          << lines.str();
-
-    return label.str();
-}
-
-class CenterListWindow : public ListWindowBase<std::string>
-{
-public:
-    CenterListWindow(
-        IAppContext &context,
-        const Items &items,
-        const typename Items::iterator selected)
-        : ListWindowBase(context,items,selected)
-    {
-        resize(context.display().width(), context.display().height());
-    }
-
-
-    void resize(const int w, const int h) override
-    {
-        Window::resize(WindowWidth, h-5);
-        centerWindow();
-    }
-
-    void draw() override
-    {
-        fillWith(Display::Pair::Dialog);
-        bordering();
-
-        int xpos = 2;
-        int ypos = 2;
-
-        const auto header = formatRow("Buffers:","Lines: ");
-        print(xpos, ypos, header);
-        ++ypos;
-        lineh(xpos,ypos, static_cast<int>(header.size()));
-        ypos+=1;
-
-        drawList();
-        print (2, height() - 2,  "[r] rename, [d] delete [Enter] select [ESC] cancel");
-    }
-};
-
-}
 
 PanesWindowController::PanesWindowController(IAppContext &context)
     : context_(context)
 {
-    listView_ = createView();
+    createView();
 }
 
 bool PanesWindowController::parseKey(const int key, Keyboard& keyboard)
@@ -78,10 +15,10 @@ bool PanesWindowController::parseKey(const int key, Keyboard& keyboard)
     switch (key)
     {
     case KEY_UP:
-        listView_->up();
+        listWindow_->up();
         break;
     case KEY_DOWN:
-        listView_->down();
+        listWindow_->down();
         break;
     case KEY_ACCEPT:
         accept_ = true;
@@ -110,7 +47,7 @@ bool PanesWindowController::accepted() const
 
 Pane& PanesWindowController::selected()
 {
-    const auto index = std::distance(listView_->items().begin(), listView_->selected());
+    const auto index = std::distance(listWindow_->items().begin(), listWindow_->selected());
     return (*context_.panes().allPanes().at(index));
 }
 
@@ -130,7 +67,7 @@ void PanesWindowController::remove()
     {
         context_.panes().remove(selected());
         context_.setActive(context_.panes().current());
-        listView_ = createView();
+        createView();
     }
 }
 
@@ -138,34 +75,24 @@ void PanesWindowController::rename()
 {
     auto &selectedPane = selected();
 
-    InputWindow inputWindow{context_.display(), "New name:", selectedPane.name(), NameWidth, NameWidth + 4};
+    InputWindow inputWindow{
+        context_.display(),
+        "New name:", selectedPane.name(),
+        PanesWindow::NameWidth,
+        PanesWindow::NameWidth + 4};
+
     InputWindowController controller{inputWindow};
     context_.keyboard().parseKeys(controller);
 
     if (controller.accepted())
     {
         selectedPane.setName(inputWindow.content());
-        listView_ = createView();
+        createView();
     }
 }
 
-std::unique_ptr<ListWindowBase<std::string>> PanesWindowController::createView() const
+void PanesWindowController::createView()
 {
-    ListWindowBase<std::string>::Items items;
-/*    std::size_t selectedIndex = 0;
-    for (const auto &item : context_.panes().allPanes())
-    {
-        items.push_back(
-            formatRow(
-                item->name(),
-                std::to_string(item->buffer().size())));
-
-        if (item.get() == &context_.panes().current())
-            selectedIndex = items.size() - 1;
-    }*/
-
-    return std::make_unique<CenterListWindow>(
-        context_,
-        items,
-        items.begin());
+    listWindow_ = std::make_unique<PanesWindow>(
+        context_, context_.panes().allPanes(), context_.panes().currentIterator());
 }

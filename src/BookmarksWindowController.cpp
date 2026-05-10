@@ -25,6 +25,11 @@ public:
         Window::resize(WindowWidth, h-1);
     }
 
+    void printLine(int x, int y, bool selected, typename Items::const_iterator &line) const override
+    {
+        
+    }
+    
     void draw() override
     {
         fillWith(Display::Pair::Bookmark);
@@ -32,7 +37,7 @@ public:
 
         int xpos = 1;
         int ypos = 1;
-
+/*
         for (auto it = items_.begin();
              it != items_.end() && ypos < height();
              ++it)
@@ -51,7 +56,7 @@ public:
             label.resize(WindowWidth-2);
             print(xpos, ypos, label);
             ++ypos;
-        }
+        }*/
     }
 };
 

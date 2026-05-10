@@ -91,13 +91,13 @@ void Window::moveCursor(const int x, const int y)
     wmove(static_cast<WINDOW*>(winPtr_), y, x);
 }
 
-void Window::setColor(const Display::Pair pair)
+void Window::setColor(const Display::Pair pair) const
 {
     wattron(static_cast<WINDOW*>(winPtr_),
             COLOR_PAIR(static_cast<short>(pair)));
 }
 
-void Window::print(int x, int y, const std::string& str)
+void Window::print(int x, int y, const std::string& str) const
 {
     mvwaddstr(static_cast<WINDOW*>(winPtr_), y, x, str.c_str());
 }
