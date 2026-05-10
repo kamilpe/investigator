@@ -70,12 +70,12 @@ void Display::initColors() const
     init_pair(static_cast<short>(Pair::LogLineWarning), COLOR_YELLOW, COLOR_BLACK);
     init_pair(static_cast<short>(Pair::LogLineError),   COLOR_WHITE,  COLOR_RED);
     init_pair(static_cast<short>(Pair::LineNum),    COLOR_YELLOW, COLOR_BLACK);
-    init_pair(static_cast<short>(Pair::Statusbar),  COLOR_WHITE,  COLOR_BLUE);
-    init_pair(static_cast<short>(Pair::Dialog),     COLOR_WHITE,  COLOR_DKGRAY);
-    init_pair(static_cast<short>(Pair::Input),      COLOR_YELLOW, COLOR_BLACK);
+    init_pair(static_cast<short>(Pair::Statusbar),  COLOR_WHITE,  COLOR_DKBLUE);
+    init_pair(static_cast<short>(Pair::Dialog),     COLOR_WHITE,  COLOR_DKBLUE);
+    init_pair(static_cast<short>(Pair::Input),      COLOR_YELLOW, COLOR_DKGRAY);
     init_pair(static_cast<short>(Pair::Highlight),  COLOR_DKGRAY, COLOR_YELLOW);
     init_pair(static_cast<short>(Pair::NotifyWindow), COLOR_BLACK, COLOR_LTGRAY);
-    init_pair(static_cast<short>(Pair::ProgressBar),COLOR_DKBLUE, COLOR_DKBLUE);
+    init_pair(static_cast<short>(Pair::ProgressBar),COLOR_DKBLUE, COLOR_BLUE);
 }
 
 int Display::width() const
