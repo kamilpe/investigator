@@ -57,6 +57,11 @@ std::string LogBufferView::value(const iterator it) const
     return buffer_.line(*it);
 }
 
+std::string LogBufferView::value(LineId id) const
+{
+    return buffer_.line(id);
+}
+
 LogBufferView::iterator LogBufferView::findClosestTo(LineId id) const
 {
     if (id < 0)

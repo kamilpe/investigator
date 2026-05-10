@@ -227,8 +227,8 @@ LogBufferView::iterator LogViewportWindow::find(const std::string& expr)
 {
     std::regex regexp{expr, std::regex::icase | std::regex::basic};
     return std::find_if(cursor_ + 1, bufferView_.cend(),
-        [this, &regexp](const auto& it) {
-            const auto& line = bufferView_.value(it);
+        [this, &regexp](const auto id) {
+            const auto& line = bufferView_.value(id);
             try {
                 std::smatch match;
                 return std::regex_search(line, match, regexp);

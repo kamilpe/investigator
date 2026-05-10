@@ -21,7 +21,8 @@ public:
     LogBufferView::iterator cend() const;
     std::size_t size() const;
     const std::vector<LineId>& lines() const;
-    std::string value(const iterator it) const; // TODO: const std::string& ?
+    std::string value(const iterator it) const;
+    std::string value(LineId id) const;
     iterator findClosestTo(LineId id) const;
 
 private:
