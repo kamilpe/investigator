@@ -22,7 +22,7 @@ bool PanesWindowController::parseKey(const int key, Keyboard& keyboard)
     case KEY_ACCEPT:
         accept_ = true;
         return false;
-    case 'b':
+    case '\t':
     case KEY_ESCAPE:
         accept_ = false;
         return false;

@@ -4,6 +4,7 @@
 #include <functional>
 #include <regex>
 
+
 class LogBufferView
 {
 public:
