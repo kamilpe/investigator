@@ -1,6 +1,6 @@
 #pragma once
 #include "IAppContext.hpp"
-#include "CursesToolkit/Window.hpp"
+#include "Toolkit/Window.hpp"
 
 #include <memory>
 

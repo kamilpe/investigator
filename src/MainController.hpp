@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CursesToolkit/Display.hpp"
-#include "CursesToolkit/IKeyboardInput.hpp"
+#include "Toolkit/Display.hpp"
+#include "Toolkit/IKeyboardInput.hpp"
 #include "Logs/LogBuffer.hpp"
 #include "PanesContainer.hpp"
 #include "Statusbar.hpp"

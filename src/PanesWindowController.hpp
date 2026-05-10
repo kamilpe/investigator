@@ -2,7 +2,7 @@
 
 #include "ListWindow.hpp"
 #include "IAppContext.hpp"
-#include "CursesToolkit/IKeyboardInput.hpp"
+#include "Toolkit/IKeyboardInput.hpp"
 #include <memory>
 
 class PanesWindowController :  public IKeyboardInput

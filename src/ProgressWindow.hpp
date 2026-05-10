@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CursesToolkit/Window.hpp"
+#include "Toolkit/Window.hpp"
 
 class ProgressWindow : public Window
 {

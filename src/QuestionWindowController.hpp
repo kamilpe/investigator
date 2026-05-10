@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CursesToolkit/IKeyboardInput.hpp"
+#include "Toolkit/IKeyboardInput.hpp"
 #include "QuestionWindow.hpp"
 
 class QuestionWindowController :  public IKeyboardInput
