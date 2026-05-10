@@ -4,7 +4,7 @@
 LogLinePrinter::LogLinePrinter(ICanvas& canvas, const int width)
     : canvas_(canvas)
     , width_(width)
-    , currentColor_(Display::Pair::LogLine)
+    , currentColor_(Display::Pair::RegularLine)
     , warning_(" WRN/", std::regex::icase | std::regex::basic)
     , error_(" ERR/", std::regex::icase | std::regex::basic)
 {
@@ -71,8 +71,9 @@ Display::Pair LogLinePrinter::setupCurrentColor(const std::string& content)
     }
     catch(const std::regex_error& e)
     {
+        // TODO: What to do here?
     }
-    return Display::Pair::LogLine;
+    return Display::Pair::RegularLine;
 }
 
 void LogLinePrinter::printLine(

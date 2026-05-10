@@ -34,7 +34,8 @@ protected:
     void putc(int x, int y, const char c) override;
     void lineh(int x, int y, int w) override;
     void bar(int x, int y, int w) override;
-    void underline(const bool value) override;
+    void highlight(const bool value) const override;
+    void underline(const bool value) const override;
     void bordering() override;
     void fillWith(const Display::Pair pair) override;
 

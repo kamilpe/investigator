@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ListWindowBase.hpp"
-#include "IAppContext.hpp"
 #include "PanesContainer.hpp"
 #include "Toolkit/IKeyboardInput.hpp"
 #include "PanesWindow.hpp"
@@ -22,6 +21,5 @@ private:
     bool accept_;
     void rename();
     void remove();
-    
     void createView();
 };

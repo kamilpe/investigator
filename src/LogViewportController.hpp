@@ -1,15 +1,15 @@
 #pragma once
 
-#include "LogViewport.hpp"
+#include "LogViewportWindow.hpp"
 #include "Toolkit/IKeyboardInput.hpp"
 
 class LogViewportController : public IKeyboardInput
 {
 public:
-    LogViewportController(LogViewport&);
+    LogViewportController(LogViewportWindow&);
 
     bool parseKey(const int key, Keyboard& keyboard) override;
 
 private:
-    LogViewport &window_;
+    LogViewportWindow &window_;
 };

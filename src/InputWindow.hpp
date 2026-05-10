@@ -21,7 +21,8 @@ public:
     void right();
     void del();
     void backspace();
-    std::string content() const;
+    const std::string& content() const;
+    void setCursor(const std::string::const_iterator& cursor);
 
 private:
     Display& display_;

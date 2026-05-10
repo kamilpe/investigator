@@ -8,11 +8,11 @@
 #include <regex>
 #include <optional>
 
-class LogViewport : public Window
+class LogViewportWindow : public Window
 {
 public:
-    LogViewport(Display& display, const LogBufferView& bufferView, const int shift = 0);
-    ~LogViewport();
+    LogViewportWindow(Display& display, const LogBufferView& bufferView, const int shift = 0);
+    ~LogViewportWindow();
 
     void draw() override;
     void resize(const int w, const int h) override;
@@ -27,6 +27,7 @@ public:
     LogBufferView::iterator find(const std::string& expr);
     void highlight(const std::string& expr);
     const LogBufferView& buffer() const;
+    void setFocus(bool focus);
 
 private:
     const LogBufferView& bufferView_;
@@ -40,6 +41,7 @@ private:
     LogBufferView::iterator endLine_;
     unsigned linesOnScreen_;
     std::optional<std::regex> hlre_;
+    bool focus_ = true;
 
     void markCursor(const LogBufferView::iterator& it);
     int printLogLine(const int y, const LogBufferView::iterator& it);

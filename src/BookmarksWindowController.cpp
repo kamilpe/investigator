@@ -2,70 +2,10 @@
 #include "InputWindowController.hpp"
 #include <ncurses.h>
 
-
-namespace
-{
-constexpr auto WindowWidth = 50;
-
-class LeftListWindow : public ListWindowBase<std::string>
-{
-public:
-    LeftListWindow(
-        IAppContext &context,
-        const Items &items,
-        const typename Items::iterator selectedIndex)
-        : ListWindowBase<std::string>(context, items, selectedIndex)
-    {
-        resize(context.display().width(), context.display().height());
-    }
-
-    void resize(const int w, const int h) override
-    {
-        moveWindow(0,0);
-        Window::resize(WindowWidth, h-1);
-    }
-
-    void printLine(int x, int y, bool selected, typename Items::const_iterator &line) const override
-    {
-        
-    }
-    
-    void draw() override
-    {
-        fillWith(Display::Pair::Bookmark);
-        bordering();
-
-        int xpos = 1;
-        int ypos = 1;
-/*
-        for (auto it = items_.begin();
-             it != items_.end() && ypos < height();
-             ++it)
-        {
-            if (it == selected_)
-            {
-                setColor(Display::Pair::Highlight);
-            }
-            else
-            {
-                setColor(Display::Pair::Bookmark);
-            }
-
-
-            std::string label(*it);
-            label.resize(WindowWidth-2);
-            print(xpos, ypos, label);
-            ++ypos;
-        }*/
-    }
-};
-
-}
-
 BookmarksWindowController::BookmarksWindowController(IAppContext &context)
     : context_(context)
 {
-    listView_ = createView();
+    createView();
 }
 
 bool BookmarksWindowController::parseKey(const int key, Keyboard& keyboard)
@@ -73,30 +13,22 @@ bool BookmarksWindowController::parseKey(const int key, Keyboard& keyboard)
     switch (key)
     {
     case KEY_UP:
-        listView_->up();
+        listWindow_->up();
         break;
     case KEY_DOWN:
-        listView_->down();
+        listWindow_->down();
         break;
     }
     return true;
 }
 
-std::unique_ptr<ListWindowBase<std::string>> BookmarksWindowController::createView() const
+void BookmarksWindowController::setFocus(bool focus)
 {
-    ListWindowBase<std::string>::Items items;
-    for (const auto &item : context_.bookmarks())
-    {
-        items.push_back(item.name);
-    }
-
-    return std::make_unique<LeftListWindow>(
-        context_,
-        items,
-        items.begin());
+    listWindow_->setFocus(focus);
 }
 
-ListWindowBase<std::string>& BookmarksWindowController::window()
+void BookmarksWindowController::createView()
 {
-    return *listView_;
+    listWindow_ = std::make_unique<BookmarksWindow>(
+        context_, context_.bookmarks(), context_.bookmarks().begin());
 }

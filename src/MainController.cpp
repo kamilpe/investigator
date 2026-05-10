@@ -17,9 +17,10 @@ MainController::MainController(Display& display, const LogBuffer& logBuffer, Key
     , logBuffer_(logBuffer)
     , panes_(std::make_unique<Pane>(logBuffer_.name(), logBuffer_))
     , keyboard_(keyboard)
-    , window_(std::make_unique<LogViewport>(display_, panes_.current().buffer()))
-    , controller_(std::make_unique<LogViewportController>(*window_.get()))
+    , logViewportWindow_(std::make_unique<LogViewportWindow>(display_, panes_.current().buffer()))
+    , logViewportController_(std::make_unique<LogViewportController>(*logViewportWindow_.get()))
     , statusBar_(display, *this)
+    , currentFocusInput_(logViewportController_.get())
 {
 }
 
@@ -47,11 +48,10 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
     case 'h':
         highlight();
         break;
-    case 'b':
     case ' ':
         bookmark();
         break;
-    case 'B':
+    case 'b':
         switchBookmarkPanel();
         break;
     case '\t':
@@ -60,7 +60,11 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
     case '?':
         showHelp();
         break;
-    default: return controller_->parseKey(key, keyboard);
+    case KEY_LEFT:
+    case KEY_RIGHT:
+        switchFocus();
+        break;
+    default: return currentFocusInput_->parseKey(key, keyboard);
     }
     return true;
 }
@@ -83,7 +87,7 @@ bool MainController::askForExit()
 
 void MainController::bookmark()
 {
-    if (!window_->cursor())
+    if (!logViewportWindow_->cursor())
     {
         QuestionWindow question{
             display_,
@@ -94,7 +98,7 @@ void MainController::bookmark()
         return;
     }
 
-    const std::string defaultName = "line " + std::to_string(**window_->cursor() + 1);
+    const std::string defaultName = "line " + std::to_string(**logViewportWindow_->cursor() + 1);
     InputWindow inputWindow{display_, "Bookmark name:", defaultName, 30};
     InputWindowController controller{inputWindow};
     keyboard_.parseKeys(controller);
@@ -136,7 +140,7 @@ void MainController::gotoLine()
     {
         const auto lineId = std::atoi(inputWindow.content().c_str()) - 1;
         const auto targetIter = pane().buffer().findClosestTo(lineId);
-        window_->goTo(targetIter);
+        logViewportWindow_->goTo(targetIter);
     }
 }
 
@@ -145,9 +149,9 @@ void MainController::search()
     InputWindow inputWindow{display_, "Search for:", lastSearch_, 500, 100};
     InputWindowController controller{inputWindow};
     keyboard_.parseKeys(controller);
-    const auto it = window_->find(inputWindow.content());
-    window_->goTo(it);
-    window_->highlight(inputWindow.content());
+    const auto it = logViewportWindow_->find(inputWindow.content());
+    logViewportWindow_->goTo(it);
+    logViewportWindow_->highlight(inputWindow.content());
 
     lastSearch_ = inputWindow.content();
 }
@@ -182,22 +186,22 @@ void MainController::highlight()
     InputWindow inputWindow{display_, "Highlight:", lastHighlight_, 500, 100};
     InputWindowController controller{inputWindow};
     keyboard_.parseKeys(controller);
-    window_->highlight(inputWindow.content());
+    logViewportWindow_->highlight(inputWindow.content());
 
     lastHighlight_ = inputWindow.content();
 }
 
 void MainController::setActive(Pane &pane)
 {
-    const auto currentCursor = window_->cursor();
+    const auto currentCursor = logViewportWindow_->cursor();
 
     panes_.setCurrent(pane);
-    window_ = std::make_unique<LogViewport>(display_, panes_.current().buffer());
-    controller_ = std::make_unique<LogViewportController>(*window_.get());
+    logViewportWindow_ = std::make_unique<LogViewportWindow>(display_, panes_.current().buffer());
+    logViewportController_ = std::make_unique<LogViewportController>(*logViewportWindow_.get());
 
     if (currentCursor)
     {
-        window_->goTo(
+        logViewportWindow_->goTo(
             pane.buffer().findClosestTo(
                 (**currentCursor)));
     }
@@ -208,18 +212,36 @@ void MainController::switchBookmarkPanel()
     if (!bookmarksController_)
     {
         bookmarksController_ = std::make_unique<BookmarksWindowController>(*this);
-        window_ = std::make_unique<LogViewport>(
+        logViewportWindow_ = std::make_unique<LogViewportWindow>(
             display_,
             panes_.current().buffer(),
-            bookmarksController_->window().width());
-        controller_ = std::make_unique<LogViewportController>(*window_.get());
+            BookmarksWindow::WindowWidth);
+        logViewportController_ = std::make_unique<LogViewportController>(*logViewportWindow_.get());
     }
     else
     {
         bookmarksController_ = nullptr;
-        window_ = std::make_unique<LogViewport>(display_, panes_.current().buffer());
-        controller_ = std::make_unique<LogViewportController>(*window_.get());
+        logViewportWindow_ = std::make_unique<LogViewportWindow>(display_, panes_.current().buffer());
+        logViewportController_ = std::make_unique<LogViewportController>(*logViewportWindow_.get());
     }
+    switchFocus();
+}
+
+void MainController::switchFocus()
+{
+    if (bookmarksController_)
+    {
+        if (currentFocusInput_ != bookmarksController_.get())
+        {
+            currentFocusInput_ = bookmarksController_.get();
+            bookmarksController_->setFocus(true);
+            logViewportWindow_->setFocus(false);
+            return;
+        }
+    }
+    currentFocusInput_ = logViewportController_.get();
+    bookmarksController_->setFocus(false);
+    logViewportWindow_->setFocus(true);
 }
 
 Pane& MainController::pane()
@@ -232,9 +254,9 @@ PanesContainer& MainController::panes()
     return panes_;
 }
 
-LogViewport& MainController::window()
+LogViewportWindow& MainController::window()
 {
-    return *window_;
+    return *logViewportWindow_;
 }
 
 Display& MainController::display()
