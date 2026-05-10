@@ -8,6 +8,7 @@ using BookmarksWindowList = ListWindowBase<Bookmark>;
 class BookmarksWindow : public BookmarksWindowList
 {
 public:
+    static constexpr auto NameWidth = 48;
     static constexpr auto WindowWidth = 50;
     
     BookmarksWindow(
@@ -18,6 +19,7 @@ public:
     void resize(const int w, const int h) override;
     void draw() override;
     void setFocus(bool focus);
+    void selectClosest(int id);
 
 protected:
     void printLine(

@@ -7,12 +7,14 @@
 class BookmarksWindowController :  public IKeyboardInput
 {
 public:
-    BookmarksWindowController(BookmarksWindow& window);
+    BookmarksWindowController(IAppContext &context, BookmarksWindow& window);
 
     bool parseKey(const int key, Keyboard &keyboard) override;
-    void selectClosest(int id);
 
 private:
-    BookmarksWindow& listWindow_;
+    IAppContext &context_;
+    BookmarksWindow& window_;
     void createView();
+    void rename();
+    void remove();
 };

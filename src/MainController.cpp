@@ -43,6 +43,7 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
     case 'h':
         highlight();
         break;
+    case '\n':
     case 'm':
         bookmark();
         break;
@@ -55,6 +56,8 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
     case '?':
         showHelp();
         break;
+    case KEY_LEFT:
+    case KEY_RIGHT:
     case '\t':
         if (!bookmarksController_ && bookmarks().size() > 0) {
             toggleBookmarkPanel();
@@ -99,7 +102,7 @@ void MainController::bookmark()
     }
 
     const std::string defaultName = "line " + std::to_string(**logViewportWindow_->cursor() + 1);
-    InputWindow inputWindow{display_, "Bookmark name:", defaultName, 30};
+    InputWindow inputWindow{display_, "Bookmark name:", defaultName, BookmarksWindow::NameWidth};
     InputWindowController controller{inputWindow};
     keyboard_.parseKeys(controller);
 
@@ -127,7 +130,7 @@ void MainController::updateBookmarkFromViewport()
     if (!bookmarksController_) {
         return; // TODO: needed?
     }
-    bookmarksController_->selectClosest(**logWindow().cursor());
+    bookmarksWindow_->selectClosest(**logWindow().cursor());
 }
 
 void MainController::updateViewportFromBookmark()
@@ -245,7 +248,7 @@ void MainController::toggleBookmarkPanel()
     if (!bookmarksController_)
     {
         bookmarksWindow_ = std::make_unique<BookmarksWindow>(*this, bookmarks(), bookmarks().begin());
-        bookmarksController_ = std::make_unique<BookmarksWindowController>(*bookmarksWindow_.get());
+        bookmarksController_ = std::make_unique<BookmarksWindowController>(*this, *bookmarksWindow_.get());
     }
     else
     {
