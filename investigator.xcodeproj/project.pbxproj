@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8E1555B123D7905E008EF97F /* MainController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E15557E23D7905E008EF97F /* MainController.cpp */; };
-		8E1555B223D7905E008EF97F /* ListWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E15557F23D7905E008EF97F /* ListWindow.cpp */; };
 		8E1555B323D7905E008EF97F /* ProgressWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E15558023D7905E008EF97F /* ProgressWindow.cpp */; };
 		8E1555B423D7905E008EF97F /* ArgParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E15558123D7905E008EF97F /* ArgParser.cpp */; };
 		8E1555B523D7905E008EF97F /* QuestionWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E15558323D7905E008EF97F /* QuestionWindowController.cpp */; };
@@ -47,7 +46,6 @@
 /* Begin PBXFileReference section */
 		8E15552523D78E66008EF97F /* inv */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = inv; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E15557E23D7905E008EF97F /* MainController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainController.cpp; sourceTree = "<group>"; };
-		8E15557F23D7905E008EF97F /* ListWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListWindow.cpp; sourceTree = "<group>"; };
 		8E15558023D7905E008EF97F /* ProgressWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressWindow.cpp; sourceTree = "<group>"; };
 		8E15558123D7905E008EF97F /* ArgParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArgParser.cpp; sourceTree = "<group>"; };
 		8E15558223D7905E008EF97F /* IAppContext.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IAppContext.hpp; sourceTree = "<group>"; };
@@ -96,6 +94,9 @@
 		8E1555AF23D7905E008EF97F /* PanesWindowController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PanesWindowController.hpp; sourceTree = "<group>"; };
 		8E1555B023D7905E008EF97F /* LogViewportController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogViewportController.cpp; sourceTree = "<group>"; };
 		8E1555C823D791CC008EF97F /* libncurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libncurses.tbd; path = usr/lib/libncurses.tbd; sourceTree = SDKROOT; };
+		8E1DDFF023E21F8D005A606A /* ListWindowBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ListWindowBase.hpp; sourceTree = "<group>"; };
+		8E1DDFF123E2218D005A606A /* BookmarksWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BookmarksWindowController.hpp; sourceTree = "<group>"; };
+		8E1DDFF223E221A9005A606A /* PanesWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PanesWindowController.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,13 +134,15 @@
 				8E15559F23D7905E008EF97F /* Toolkit */,
 				8E15559423D7905E008EF97F /* Logs */,
 				8E15557E23D7905E008EF97F /* MainController.cpp */,
-				8E15557F23D7905E008EF97F /* ListWindow.cpp */,
+				8E1DDFF023E21F8D005A606A /* ListWindowBase.hpp */,
 				8E15558023D7905E008EF97F /* ProgressWindow.cpp */,
 				8E15558123D7905E008EF97F /* ArgParser.cpp */,
 				8E15558223D7905E008EF97F /* IAppContext.hpp */,
 				8E15558323D7905E008EF97F /* QuestionWindowController.cpp */,
 				8E15558423D7905E008EF97F /* BookmarksWindowController.cpp */,
+				8E1DDFF123E2218D005A606A /* BookmarksWindowController.hpp */,
 				8E15558523D7905E008EF97F /* PanesWindowController.cpp */,
+				8E1DDFF223E221A9005A606A /* PanesWindowController.hpp */,
 				8E15558623D7905E008EF97F /* LogViewportController.hpp */,
 				8E15558723D7905E008EF97F /* InputWindowController.hpp */,
 				8E15558823D7905E008EF97F /* QuestionWindow.cpp */,
@@ -175,10 +178,10 @@
 		8E15559423D7905E008EF97F /* Logs */ = {
 			isa = PBXGroup;
 			children = (
+				8E15559823D7905E008EF97F /* LogBuffer.cpp */,
 				8E15559523D7905E008EF97F /* LogBuffer.hpp */,
 				8E15559623D7905E008EF97F /* LogBufferView.cpp */,
 				8E15559723D7905E008EF97F /* LogBufferView.hpp */,
-				8E15559823D7905E008EF97F /* LogBuffer.cpp */,
 			);
 			path = Logs;
 			sourceTree = "<group>";
@@ -285,7 +288,6 @@
 				8E1555C323D7905E008EF97F /* Display.cpp in Sources */,
 				8E1555BE23D7905E008EF97F /* Pane.cpp in Sources */,
 				8E1555BC23D7905E008EF97F /* LogBuffer.cpp in Sources */,
-				8E1555B223D7905E008EF97F /* ListWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
