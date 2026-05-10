@@ -43,7 +43,7 @@ void InputWindow::draw()
     print(inputX, inputY, std::string(width_ - 4, ' '));
     print(inputX, inputY, content_);
 
-    moveCursor(inputX + std::distance(content_.begin(), cursor_), inputY);
+    moveCursor(inputX + static_cast<int>(std::distance(content_.begin(), cursor_)), inputY);
 }
 
 

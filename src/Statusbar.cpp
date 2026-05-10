@@ -42,7 +42,7 @@ void Statusbar::draw()
                   cursorPos, linesCount,
                   procentage, '%');
 
-    const int lengthOfStatusBuffer = std::strlen(statusBuffer);
+    const size_t lengthOfStatusBuffer = std::strlen(statusBuffer);
     fullStatusText.replace(
         fullStatusText.length() - lengthOfStatusBuffer,
         lengthOfStatusBuffer,

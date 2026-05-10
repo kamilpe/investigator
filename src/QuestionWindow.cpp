@@ -4,14 +4,14 @@ namespace
 {
 std::pair<int,int> dimensions(const std::string &text)
 {
-    int width = 0;
-    int height = 0;
+    size_t width = 0;
+    size_t height = 0;
     auto lastLine = text.begin();
     for (auto i = text.begin(); i != text.end(); ++i)
     {
         if (*i == '\n')
         {
-            width = std::max<int>(std::distance(lastLine, i), width);
+            width = std::max<size_t>(std::distance(lastLine, i), width);
             ++height;
             lastLine = i;
         }

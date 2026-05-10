@@ -20,7 +20,7 @@ std::string formatRow(const std::string& name, const std::string &linesCount)
     const auto maxWidth = 3 + NameWidth - lines.str().size();
 
     std::stringstream label;
-    label << std::setw(maxWidth) << std::left
+    label << std::setw(static_cast<unsigned int>(maxWidth)) << std::left
           << name.substr(0, maxWidth)
           << lines.str();
 
@@ -57,7 +57,7 @@ public:
         const auto header = formatRow("Buffers:","Lines: ");
         print(xpos, ypos, header);
         ++ypos;
-        lineh(xpos,ypos, header.size());
+        lineh(xpos,ypos, static_cast<int>(header.size()));
         ypos+=1;
 
         for (auto it = items_.begin();

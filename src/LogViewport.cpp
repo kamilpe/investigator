@@ -21,7 +21,7 @@ namespace
 
     int getDigitsCount(int num)
     {
-        return std::to_string(num).length();
+        return static_cast<int>(std::to_string(num).length());
     }
 }
 

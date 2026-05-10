@@ -11,7 +11,7 @@ public:
     bool initialized() const;
     const std::string& name() const;
     const char* line(const unsigned id) const;
-    unsigned linesCount() const;
+    unsigned long linesCount() const;
 
 private:
     const std::string name_;
