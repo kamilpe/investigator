@@ -6,6 +6,7 @@
 #include "Help.hpp"
 #include <ncurses.h>
 #include <functional>
+#include <stdexcept>
 
 MainController::MainController(Display& display, const LogBuffer& logBuffer, Keyboard &keyboard)
     : display_(display)
@@ -108,7 +109,7 @@ void MainController::bookmark()
 
     if (controller.accepted())
     {
-        bookmarks_.emplace_back(inputWindow.content(), **logWindow().cursor());
+        bookmarks_.insert({inputWindow.content(), **logWindow().cursor()});
         updateBookmarkFromViewport();
     }
 }
@@ -138,7 +139,7 @@ void MainController::updateViewportFromBookmark()
     if (!bookmarksController_) {
         return; // TODO: needed?
     }
-    
+
     if (bookmarksWindow_->selected() != bookmarksWindow_->items().cend())
     {
         const auto selectedBookmark = bookmarksWindow_->selected();
@@ -230,13 +231,13 @@ void MainController::setActive(Pane &pane)
 {
     auto newLogViewportWindow = std::make_unique<LogViewportWindow>(display_, pane.buffer());
     auto newlogViewportController = std::make_unique<LogViewportController>(*newLogViewportWindow.get());
-   
+
     const auto currentCursor = logViewportWindow_->cursor();
     if (currentCursor)
     {
         newLogViewportWindow->goTo(newLogViewportWindow->buffer().findClosestTo((**currentCursor)));
     }
-    
+
     panes_.setCurrent(pane);
     logViewportWindow_ = std::move(newLogViewportWindow);
     logViewportController_ = std::move(newlogViewportController);
@@ -300,6 +301,7 @@ IKeyboardInput& MainController::currentFocusInput()
         case Focus::LogViewport:
             return *logViewportController_.get();
     }
+    throw std::logic_error("Unable to detect window");
 }
 
 Pane& MainController::pane()

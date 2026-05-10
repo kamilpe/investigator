@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 struct Bookmark
 {
@@ -10,4 +11,8 @@ public:
     int id;
 };
 
-using BookmarksContainer = std::vector<Bookmark>;
+class BookmarksContainer : public std::vector<Bookmark>
+{
+public:
+    void insert(const Bookmark& bookmark);
+};
