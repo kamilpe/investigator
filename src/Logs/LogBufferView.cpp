@@ -47,7 +47,7 @@ std::size_t LogBufferView::size() const
     return lines_.size();
 }
 
-const std::vector<int>& LogBufferView::lines() const
+const std::vector<LineId>& LogBufferView::lines() const
 {
     return lines_;
 }
@@ -57,7 +57,7 @@ std::string LogBufferView::value(const iterator it) const
     return buffer_.line(*it);
 }
 
-LogBufferView::iterator LogBufferView::findClosestTo(int id) const
+LogBufferView::iterator LogBufferView::findClosestTo(LineId id) const
 {
     if (id < 0)
     {
@@ -73,7 +73,7 @@ LogBufferView::iterator LogBufferView::findClosestTo(int id) const
     {
         return it;
     }
-    
+
     it = std::lower_bound(lines_.begin(), lines_.end(), id);
     if (it == lines_.end())
     {

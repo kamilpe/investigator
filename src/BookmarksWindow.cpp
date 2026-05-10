@@ -47,7 +47,7 @@ void BookmarksWindow::draw()
     setColor(Display::Pair::RegularLine);
     drawList(1, 1, height() - 3);
     setColor(Display::Pair::Dialog);
-    
+
     underline(false);
     highlight(false);
     setColor(Display::Pair::RegularLine);
@@ -58,12 +58,12 @@ void BookmarksWindow::draw()
     }
 }
 
-void BookmarksWindow::selectClosest(int id)
+void BookmarksWindow::selectClosest(LineId id)
 {
     const auto predicate = [id](const Bookmark& bookmark) {
         return bookmark.id <= id;
     };
-    
+
     auto it = std::find_if(items().crbegin(), items().crend(), predicate);
     if (it == items().crend()) {
         select(items().cbegin());
