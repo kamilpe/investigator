@@ -68,15 +68,16 @@ LogBufferView::iterator LogBufferView::findClosestTo(int id) const
         return lines_.cend() - 1;
     }
 
-    const auto it = std::find(lines_.begin(), lines_.end(), id);
+    auto it = std::find(lines_.begin(), lines_.end(), id);
+    if (it != lines_.end())
+    {
+        return it;
+    }
+    
+    it = std::lower_bound(lines_.begin(), lines_.end(), id);
     if (it == lines_.end())
     {
-        const auto it2 = std::lower_bound(lines_.begin(), lines_.end(), id);
-        if (it2 == lines_.end())
-        {
-            return lines_.begin();
-        }
-        return it2;
+        return lines_.begin();
     }
     return it;
 }

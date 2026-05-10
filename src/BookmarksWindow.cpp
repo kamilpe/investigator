@@ -17,7 +17,6 @@ void BookmarksWindow::resize(const int w, const int h)
     Window::resize(WindowWidth, h-1);
 }
 
-
 void BookmarksWindow::printLine(
     int x, int y, bool selected, typename Items::const_iterator &line) const
 {
@@ -49,6 +48,8 @@ void BookmarksWindow::draw()
     drawList(1, 1, height() - 3);
     setColor(Display::Pair::Dialog);
     
+    underline(false);
+    highlight(false);
     setColor(Display::Pair::RegularLine);
     if (focus_) {
         print (2, height() - 2,  "[r] rename | [d] delete");

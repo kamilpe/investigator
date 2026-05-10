@@ -14,6 +14,6 @@ public:
     virtual Pane& pane() = 0;
     virtual PanesContainer& panes() = 0;
     virtual void setActive(Pane &pane) = 0;
-    virtual LogViewportWindow& window() = 0;
+    virtual LogViewportWindow& logWindow() = 0;
     virtual BookmarksContainer& bookmarks() = 0;
 };

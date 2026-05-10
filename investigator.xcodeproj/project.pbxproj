@@ -86,7 +86,6 @@
 		8E1555A723D7905E008EF97F /* Keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Keyboard.cpp; sourceTree = "<group>"; };
 		8E1555A823D7905E008EF97F /* ICanvas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ICanvas.hpp; sourceTree = "<group>"; };
 		8E1555A923D7905E008EF97F /* ArgParser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ArgParser.hpp; sourceTree = "<group>"; };
-		8E1555AA23D7905E008EF97F /* ListWindow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ListWindow.hpp; sourceTree = "<group>"; };
 		8E1555AB23D7905E008EF97F /* ProgressWindow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProgressWindow.hpp; sourceTree = "<group>"; };
 		8E1555AC23D7905E008EF97F /* QuestionWindowController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuestionWindowController.hpp; sourceTree = "<group>"; };
 		8E1555AE23D7905E008EF97F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -150,7 +149,6 @@
 				8E15558C23D7905E008EF97F /* InputWindow.hpp */,
 				8E15558F23D7905E008EF97F /* InputWindowController.cpp */,
 				8E15558723D7905E008EF97F /* InputWindowController.hpp */,
-				8E1555AA23D7905E008EF97F /* ListWindow.hpp */,
 				8E1DDFF023E21F8D005A606A /* ListWindowBase.hpp */,
 				8E15559D23D7905E008EF97F /* LogLinePrinter.cpp */,
 				8E15558E23D7905E008EF97F /* LogLinePrinter.hpp */,
