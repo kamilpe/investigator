@@ -27,9 +27,8 @@ namespace
 
 LogViewportWindow::LogViewportWindow(
     Display& display,
-    const LogBufferView& bufferView,
-    const int shift)
-    : Window(display, shift, 0, display.width() - shift, display.height()-1)
+    const LogBufferView& bufferView)
+    : Window(display, 0, 0, display.width(), display.height()-1)
     , bufferView_(bufferView)
     , digitsCount_(getDigitsCount(getMaxIdFromView(bufferView)))
     , logLinePos_(digitsCount_ + 1)

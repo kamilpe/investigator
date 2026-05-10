@@ -20,8 +20,8 @@ MainController::MainController(Display& display, const LogBuffer& logBuffer, Key
     , logViewportWindow_(std::make_unique<LogViewportWindow>(display_, panes_.current().buffer()))
     , logViewportController_(std::make_unique<LogViewportController>(*logViewportWindow_.get()))
     , statusBar_(display, *this)
-    , currentFocusInput_(logViewportController_.get())
 {
+    updateViewportWindowPosition();
 }
 
 bool MainController::parseKey(const int key, Keyboard &keyboard)
@@ -52,10 +52,10 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
         bookmark();
         break;
     case 'b':
-        switchBookmarkPanel();
+        toggleBookmarkPanel();
         break;
     case '\t':
-        showPanes();
+        selectPane();
         break;
     case '?':
         showHelp();
@@ -64,7 +64,7 @@ bool MainController::parseKey(const int key, Keyboard &keyboard)
     case KEY_RIGHT:
         switchFocus();
         break;
-    default: return currentFocusInput_->parseKey(key, keyboard);
+    default: return currentFocusInput().parseKey(key, keyboard);
     }
     return true;
 }
@@ -119,7 +119,7 @@ void MainController::showHelp()
 }
 
 
-void MainController::showPanes()
+void MainController::selectPane()
 {
     PanesWindowController controller{*this};
     keyboard_.parseKeys(controller);
@@ -193,55 +193,76 @@ void MainController::highlight()
 
 void MainController::setActive(Pane &pane)
 {
+    auto newLogViewportWindow = std::make_unique<LogViewportWindow>(display_, pane.buffer());
+    auto newlogViewportController = std::make_unique<LogViewportController>(*newLogViewportWindow.get());
+   
     const auto currentCursor = logViewportWindow_->cursor();
-
-    panes_.setCurrent(pane);
-    logViewportWindow_ = std::make_unique<LogViewportWindow>(display_, panes_.current().buffer());
-    logViewportController_ = std::make_unique<LogViewportController>(*logViewportWindow_.get());
-
     if (currentCursor)
     {
-        logViewportWindow_->goTo(
-            pane.buffer().findClosestTo(
-                (**currentCursor)));
+        newLogViewportWindow->goTo(newLogViewportWindow->buffer().findClosestTo((**currentCursor)));
     }
+    
+    panes_.setCurrent(pane);
+    logViewportWindow_ = std::move(newLogViewportWindow);
+    logViewportController_ = std::move(newlogViewportController);
+    updateViewportWindowPosition();
 }
 
-void MainController::switchBookmarkPanel()
+void MainController::toggleBookmarkPanel()
 {
     if (!bookmarksController_)
     {
         bookmarksController_ = std::make_unique<BookmarksWindowController>(*this);
-        logViewportWindow_ = std::make_unique<LogViewportWindow>(
-            display_,
-            panes_.current().buffer(),
-            BookmarksWindow::WindowWidth);
-        logViewportController_ = std::make_unique<LogViewportController>(*logViewportWindow_.get());
     }
     else
     {
         bookmarksController_ = nullptr;
-        logViewportWindow_ = std::make_unique<LogViewportWindow>(display_, panes_.current().buffer());
-        logViewportController_ = std::make_unique<LogViewportController>(*logViewportWindow_.get());
     }
-    switchFocus();
+    updateViewportWindowPosition();
+}
+
+void MainController::updateViewportWindowPosition()
+{
+    if (bookmarksController_)
+    {
+        logViewportWindow_->resize(display_.width() - BookmarksWindow::WindowWidth, display_.height());
+        logViewportWindow_->moveWindow(BookmarksWindow::WindowWidth, 0);
+    }
+    else
+    {
+        logViewportWindow_->resize(display_.width(), display_.height());
+        logViewportWindow_->moveWindow(0, 0);
+    }
+    logViewportWindow_->refresh();
 }
 
 void MainController::switchFocus()
 {
     if (bookmarksController_)
     {
-        if (currentFocusInput_ != bookmarksController_.get())
+        if (currentFocus_ != Focus::Bookmarks)
         {
-            currentFocusInput_ = bookmarksController_.get();
+            currentFocus_ = Focus::Bookmarks;
             bookmarksController_->setFocus(true);
             logViewportWindow_->setFocus(false);
             return;
         }
+        currentFocus_ = Focus::LogViewport;
+        bookmarksController_->setFocus(false);
+        logViewportWindow_->setFocus(true);
     }
-    currentFocusInput_ = logViewportController_.get();
-    bookmarksController_->setFocus(false);
-    logViewportWindow_->setFocus(true);
+}
+
+IKeyboardInput& MainController::currentFocusInput()
+{
+    switch (currentFocus_)
+    {
+        case Focus::Bookmarks:
+            if (bookmarksController_)
+                return *bookmarksController_.get();
+        case Focus::LogViewport:
+            return *logViewportController_.get();
+    }
 }
 
 Pane& MainController::pane()

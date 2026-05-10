@@ -34,18 +34,24 @@ private:
     std::unique_ptr<BookmarksWindowController> bookmarksController_;
     Statusbar statusBar_;
 
-    IKeyboardInput *currentFocusInput_ = nullptr;
     std::string lastHighlight_;
     std::string lastSearch_;
+    
+    enum class Focus {
+        Bookmarks,
+        LogViewport
+    } currentFocus_ = Focus::LogViewport;
 
+    IKeyboardInput& currentFocusInput();
     bool askForExit();
     void gotoLine();
     void grep();
     void search();
     void highlight();
-    void showPanes();
+    void selectPane();
     void showHelp();
     void bookmark();
-    void switchBookmarkPanel();
+    void toggleBookmarkPanel();
     void switchFocus();
+    void updateViewportWindowPosition();
 };
