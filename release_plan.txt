@@ -1,0 +1,19 @@
+1.0: Complete functionality
+====================================================================
+- fast file loading (for big files, mmap for posix)
+- grepping based on the grep tool
+- readline support for the history
+- re-creating workspace after opening the file
+- error and warnings defined in config file
+
+2.0: Support for plugins
+====================================================================
+- attach to all controllers
+- attach to all lists with callbacks
+- access to instance objects for all interfaces
+
+2.5: Windows support
+====================================================================
+- fast file loading (CreateFile/CreateFileMapping/MapViewOfFile)
+- installer with desktop integration
+
