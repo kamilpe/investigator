@@ -19,6 +19,7 @@ set(SRC_FILES
  src/Statusbar.cpp
  src/ListWindow.cpp
  src/PanesWindowController.cpp
+ src/BookmarksWindowController.cpp
  src/InputWindow.cpp
  src/InputWindowController.cpp
  src/LogLinePrinter.cpp

@@ -11,7 +11,7 @@
 class LogViewport : public Window
 {
 public:
-    LogViewport(Display& display, const LogBufferView& bufferView);
+    LogViewport(Display& display, const LogBufferView& bufferView, const int shift = 0);
     ~LogViewport();
 
     void draw() override;

@@ -18,7 +18,8 @@ public:
         Input,
         Highlight,
         NotifyWindow,
-        ProgressBar
+        ProgressBar,
+        Bookmark
     };
 
     enum class CursorMode

@@ -6,6 +6,7 @@
 #include "PanesContainer.hpp"
 #include "Statusbar.hpp"
 #include "IAppContext.hpp"
+#include "BookmarksWindowController.hpp"
 #include <string>
 
 class MainController : public IKeyboardInput, public IAppContext
@@ -20,6 +21,7 @@ public:
     PanesContainer& panes() override;
     void setActive(Pane &pane) override;
     LogViewport& window() override;
+    const std::vector<Bookmark>& bookmarks() override;
 
 private:
     Display& display_;
@@ -28,8 +30,11 @@ private:
     Keyboard &keyboard_;
     std::unique_ptr<LogViewport> window_;
     std::unique_ptr<LogViewportController> controller_;
+    std::unique_ptr<BookmarksWindowController> bookmarksController_;
     Statusbar statusBar_;
 
+
+    std::vector<Bookmark> bookmarks_;
     std::string lastHighlight_;
     std::string lastSearch_;
 
@@ -41,4 +46,5 @@ private:
     void showPanes();
     void showHelp();
     void bookmark();
+    void switchBookmarkPanel();
 };
