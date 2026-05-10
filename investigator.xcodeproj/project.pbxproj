@@ -31,6 +31,8 @@
 		8E1555C923D7924E008EF97F /* libncurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1555C823D791CC008EF97F /* libncurses.tbd */; };
 		8E64804323E237EF009BB14E /* PanesWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E64804123E237EF009BB14E /* PanesWindow.cpp */; };
 		8EB9E4D423E362BC002CC873 /* BookmarksWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9E4D223E362BC002CC873 /* BookmarksWindow.cpp */; };
+		8EDF661D23E9F47400C68BD8 /* MemoryMappedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EDF661C23E9F47400C68BD8 /* MemoryMappedFile.cpp */; };
+		8EDF661F23E9F47F00C68BD8 /* Bookmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EDF661E23E9F47F00C68BD8 /* Bookmark.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -102,6 +104,9 @@
 		8E64804423E23C57009BB14E /* Statusbar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Statusbar.hpp; sourceTree = "<group>"; };
 		8EB9E4D223E362BC002CC873 /* BookmarksWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BookmarksWindow.cpp; sourceTree = "<group>"; };
 		8EB9E4D323E362BC002CC873 /* BookmarksWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BookmarksWindow.hpp; sourceTree = "<group>"; };
+		8EDF661B23E9F47400C68BD8 /* MemoryMappedFile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MemoryMappedFile.hpp; sourceTree = "<group>"; };
+		8EDF661C23E9F47400C68BD8 /* MemoryMappedFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryMappedFile.cpp; sourceTree = "<group>"; };
+		8EDF661E23E9F47F00C68BD8 /* Bookmark.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bookmark.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +144,7 @@
 				8E15558123D7905E008EF97F /* ArgParser.cpp */,
 				8E1555A923D7905E008EF97F /* ArgParser.hpp */,
 				8E15559123D7905E008EF97F /* Bookmark.hpp */,
+				8EDF661E23E9F47F00C68BD8 /* Bookmark.cpp */,
 				8EB9E4D223E362BC002CC873 /* BookmarksWindow.cpp */,
 				8EB9E4D323E362BC002CC873 /* BookmarksWindow.hpp */,
 				8E15558423D7905E008EF97F /* BookmarksWindowController.cpp */,
@@ -186,6 +192,8 @@
 		8E15559423D7905E008EF97F /* Logs */ = {
 			isa = PBXGroup;
 			children = (
+				8EDF661C23E9F47400C68BD8 /* MemoryMappedFile.cpp */,
+				8EDF661B23E9F47400C68BD8 /* MemoryMappedFile.hpp */,
 				8E15559823D7905E008EF97F /* LogBuffer.cpp */,
 				8E15559523D7905E008EF97F /* LogBuffer.hpp */,
 				8E15559623D7905E008EF97F /* LogBufferView.cpp */,
@@ -288,10 +296,12 @@
 				8E1555B523D7905E008EF97F /* QuestionWindowController.cpp in Sources */,
 				8E1555BB23D7905E008EF97F /* LogBufferView.cpp in Sources */,
 				8E1555C423D7905E008EF97F /* Keyboard.cpp in Sources */,
+				8EDF661D23E9F47400C68BD8 /* MemoryMappedFile.cpp in Sources */,
 				8E1555C523D7905E008EF97F /* main.cpp in Sources */,
 				8E1555B123D7905E008EF97F /* MainController.cpp in Sources */,
 				8E1555B723D7905E008EF97F /* PanesWindowController.cpp in Sources */,
 				8E1555B923D7905E008EF97F /* Statusbar.cpp in Sources */,
+				8EDF661F23E9F47F00C68BD8 /* Bookmark.cpp in Sources */,
 				8E1555C223D7905E008EF97F /* Window.cpp in Sources */,
 				8E1555BA23D7905E008EF97F /* InputWindowController.cpp in Sources */,
 				8E1555C323D7905E008EF97F /* Display.cpp in Sources */,
@@ -419,6 +429,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z2S27GM9H3;
 				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -429,6 +440,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z2S27GM9H3;
 				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
