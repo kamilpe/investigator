@@ -1,4 +1,5 @@
 #include "PanesContainer.hpp"
+#include <algorithm>
 
 PanesContainer::PanesContainer(std::unique_ptr<Pane> initialPane)
     : current_(initialPane.get())
@@ -19,14 +20,8 @@ Pane& PanesContainer::current() const
 
 PanesContainer::const_iterator PanesContainer::currentIterator() const
 {
-    for (auto it = panes_.begin(); it < panes_.end(); ++it)
-    {
-        if (it->get() == current_)
-        {
-            return it;
-        }
-    }
-    return panes_.end();
+    return std::find_if(panes_.begin(), panes_.end(),
+        [this](const auto &pane) { return pane.get() == current_; });
 }
 
 const PanesContainer::Panes& PanesContainer::allPanes() const

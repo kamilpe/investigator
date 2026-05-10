@@ -226,20 +226,16 @@ void LogViewportWindow::goTo(const LogBufferView::iterator& iter)
 LogBufferView::iterator LogViewportWindow::find(const std::string& expr)
 {
     std::regex regexp{expr, std::regex::icase | std::regex::basic};
-    for (auto it = cursor_ + 1;
-         it < bufferView_.cend();
-         ++it)
-    {
-        const auto& line = bufferView_.value(it);
-        try {
-            std::smatch match;
-            if (std::regex_search(line, match, regexp))
-                return it;
-        } catch (const std::regex_error& e) {
-            /* do nothing*/
-        };
-    }
-    return bufferView_.cend();
+    return std::find_if(cursor_ + 1, bufferView_.cend(),
+        [this, &regexp](const auto& it) {
+            const auto& line = bufferView_.value(it);
+            try {
+                std::smatch match;
+                return std::regex_search(line, match, regexp);
+            } catch (const std::regex_error& e) {
+                return false;
+            }
+        });
 }
 
 const LogBufferView& LogViewportWindow::buffer() const

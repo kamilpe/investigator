@@ -1,13 +1,9 @@
 #include "Bookmark.hpp"
+#include <algorithm>
 
 void BookmarksContainer::insert(const Bookmark& bookmark)
 {
-    for (auto it = begin(); it < end(); ++it)
-    {
-        if (it->id >= bookmark.id) {
-            std::vector<Bookmark>::insert(it, bookmark);
-            return;
-        }
-    }
-    push_back(bookmark);
+    auto it = std::lower_bound(begin(), end(), bookmark.id,
+        [](const Bookmark& b, LineId id) { return b.id < id; });
+    std::vector<Bookmark>::insert(it, bookmark);
 }
